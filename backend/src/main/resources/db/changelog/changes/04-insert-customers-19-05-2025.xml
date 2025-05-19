@@ -9,7 +9,7 @@
 		<insert tableName="customers">
 			<column name="id" valueSequenceNext="customers_seq"/>
 			<column name="email" value="user1@test.ee"/>
-			<column name="password" value="$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy"/>
+			<column name="password" value="$2a$10$1EVJtE8PBkixfCsziDJzsu7sXuulH1hLYjVFwX6uYJKq5QFgpQUbG"/>
 			<column name="first_name" value="John"/>
 			<column name="last_name" value="Doe"/>
 			<column name="enabled" valueBoolean="true"/>
@@ -20,7 +20,7 @@
 		<insert tableName="customers">
 			<column name="id" valueSequenceNext="customers_seq"/>
 			<column name="email" value="user2@test.ee"/>
-			<column name="password" value="$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy"/>
+			<column name="password" value="$2a$10$1EVJtE8PBkixfCsziDJzsu7sXuulH1hLYjVFwX6uYJKq5QFgpQUbG"/>
 			<column name="first_name" value="Jane"/>
 			<column name="last_name" value="Doe"/>
 			<column name="enabled" valueBoolean="true"/>
@@ -31,7 +31,7 @@
 		<insert tableName="customers">
 			<column name="id" valueSequenceNext="customers_seq"/>
 			<column name="email" value="user3@test.ee"/>
-			<column name="password" value="$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy"/>
+			<column name="password" value="$2a$10$1EVJtE8PBkixfCsziDJzsu7sXuulH1hLYjVFwX6uYJKq5QFgpQUbG"/>
 			<column name="first_name" value="Bob"/>
 			<column name="last_name" value="Smith"/>
 			<column name="enabled" valueBoolean="true"/>
