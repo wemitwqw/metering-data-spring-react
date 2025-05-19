@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="05" author="liquibase">
+		<insert tableName="metering_points">
+			<column name="id" valueSequenceNext="metering_points_seq"/>
+			<column name="customer_id" valueNumeric="1"/>
+			<column name="meter_id" value="MP10001"/>
+			<column name="address" value="Kase 68-22, Tallinn"/>
+			<column name="active" valueBoolean="true"/>
+			<column name="created_at" valueDate="2023-01-10T00:00:00"/>
+			<column name="updated_at" valueDate="2023-01-10T00:00:00"/>
+		</insert>
+
+		<insert tableName="metering_points">
+			<column name="id" valueSequenceNext="metering_points_seq"/>
+			<column name="customer_id" valueNumeric="1"/>
+			<column name="meter_id" value="MP10002"/>
+			<column name="address" value="Kalevipoja 2-47, Tallinn"/>
+			<column name="active" valueBoolean="true"/>
+			<column name="created_at" valueDate="2023-01-11T00:00:00"/>
+			<column name="updated_at" valueDate="2023-01-11T00:00:00"/>
+		</insert>
+
+		<insert tableName="metering_points">
+			<column name="id" valueSequenceNext="metering_points_seq"/>
+			<column name="customer_id" valueNumeric="2"/>
+			<column name="meter_id" value="MP20001"/>
+			<column name="address" value="Sõle 7-121, Tallinn"/>
+			<column name="active" valueBoolean="true"/>
+			<column name="created_at" valueDate="2023-01-12T00:00:00"/>
+			<column name="updated_at" valueDate="2023-01-12T00:00:00"/>
+		</insert>
+
+		<insert tableName="metering_points">
+			<column name="id" valueSequenceNext="metering_points_seq"/>
+			<column name="customer_id" valueNumeric="3"/>
+			<column name="meter_id" value="MP30001"/>
+			<column name="address" value="Kivila 28-66, Tallinn"/>
+			<column name="active" valueBoolean="true"/>
+			<column name="created_at" valueDate="2023-01-13T00:00:00"/>
+			<column name="updated_at" valueDate="2023-01-13T00:00:00"/>
+		</insert>
+
+		<insert tableName="metering_points">
+			<column name="id" valueSequenceNext="metering_points_seq"/>
+			<column name="customer_id" valueNumeric="3"/>
+			<column name="meter_id" value="MP30002"/>
+			<column name="address" value="Paldiski mnt 121-32"/>
+			<column name="active" valueBoolean="true"/>
+			<column name="created_at" valueDate="2023-01-14T00:00:00"/>
+			<column name="updated_at" valueDate="2023-01-14T00:00:00"/>
+		</insert>
+	</changeSet>
+</databaseChangeLog>

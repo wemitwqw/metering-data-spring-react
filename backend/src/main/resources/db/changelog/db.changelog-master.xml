@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<include file="/db/changelog/changes/01-create-customers-19-05-2025.xml"/>
+	<include file="db/changelog/changes/02-create-metering_points-19-05-2025.xml"/>
+	<include file="db/changelog/changes/03-create-consumption-19-05-2025.xml"/>
+
+	<include file="db/changelog/changes/04-insert-customers-19-05-2025.xml"/>
+	<include file="db/changelog/changes/05-insert-metering_points-19-05-2025.xml"/>
+	<include file="db/changelog/changes/06-insert-consumption-19-05-2025.xml"/>
+
+</databaseChangeLog>

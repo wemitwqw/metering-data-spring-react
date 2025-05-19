@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="02" author="liquibase">
+		<createTable tableName="metering_points">
+			<column name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="customer_id" type="bigint">
+				<constraints nullable="false" foreignKeyName="fk_metering_point_customer" references="customers(id)"/>
+			</column>
+			<column name="meter_id" type="varchar(50)">
+				<constraints unique="true" nullable="false"/>
+			</column>
+			<column name="address" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="active" type="boolean" defaultValueBoolean="true">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+				<constraints nullable="false"/>
+			</column>
+			<column name="updated_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="metering_points_seq" incrementBy="1" startValue="1"/>
+
+		<createIndex indexName="idx_metering_point_customer" tableName="metering_points">
+			<column name="customer_id"/>
+		</createIndex>
+	</changeSet>
+</databaseChangeLog>

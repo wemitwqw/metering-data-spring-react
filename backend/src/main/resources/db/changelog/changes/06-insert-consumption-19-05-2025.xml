@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="06" author="liquibase">
+		<!-- Metering Point 1 (Customer 1, Apartment 1) -->
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="1"/>
+			<column name="reading_date" valueDate="2023-01-31T00:00:00"/>
+			<column name="value" valueNumeric="175.50"/>
+			<column name="created_at" valueDate="2023-02-01T09:00:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="1"/>
+			<column name="reading_date" valueDate="2023-02-28T00:00:00"/>
+			<column name="value" valueNumeric="192.30"/>
+			<column name="created_at" valueDate="2023-03-01T09:00:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="1"/>
+			<column name="reading_date" valueDate="2023-03-31T00:00:00"/>
+			<column name="value" valueNumeric="167.80"/>
+			<column name="created_at" valueDate="2023-04-01T09:00:00"/>
+		</insert>
+
+		<!-- Metering Point 2 (Customer 1, Apartment 2) -->
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="2"/>
+			<column name="reading_date" valueDate="2023-01-31T00:00:00"/>
+			<column name="value" valueNumeric="215.75"/>
+			<column name="created_at" valueDate="2023-02-01T09:30:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="2"/>
+			<column name="reading_date" valueDate="2023-02-28T00:00:00"/>
+			<column name="value" valueNumeric="226.40"/>
+			<column name="created_at" valueDate="2023-03-01T09:30:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="2"/>
+			<column name="reading_date" valueDate="2023-03-31T00:00:00"/>
+			<column name="value" valueNumeric="201.15"/>
+			<column name="created_at" valueDate="2023-04-01T09:30:00"/>
+		</insert>
+
+		<!-- Metering Point 3 (Customer 2, Apartment) -->
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="3"/>
+			<column name="reading_date" valueDate="2023-01-31T00:00:00"/>
+			<column name="value" valueNumeric="184.20"/>
+			<column name="created_at" valueDate="2023-02-01T10:00:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="3"/>
+			<column name="reading_date" valueDate="2023-02-28T00:00:00"/>
+			<column name="value" valueNumeric="198.75"/>
+			<column name="created_at" valueDate="2023-03-01T10:00:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="3"/>
+			<column name="reading_date" valueDate="2023-03-31T00:00:00"/>
+			<column name="value" valueNumeric="172.60"/>
+			<column name="created_at" valueDate="2023-04-01T10:00:00"/>
+		</insert>
+
+		<!-- Metering Point 4 (Customer 3, Apartment 1) -->
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="4"/>
+			<column name="reading_date" valueDate="2023-01-31T00:00:00"/>
+			<column name="value" valueNumeric="165.30"/>
+			<column name="created_at" valueDate="2023-02-01T10:30:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="4"/>
+			<column name="reading_date" valueDate="2023-02-28T00:00:00"/>
+			<column name="value" valueNumeric="157.80"/>
+			<column name="created_at" valueDate="2023-03-01T10:30:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="4"/>
+			<column name="reading_date" valueDate="2023-03-31T00:00:00"/>
+			<column name="value" valueNumeric="162.45"/>
+			<column name="created_at" valueDate="2023-04-01T10:30:00"/>
+		</insert>
+
+		<!-- Metering Point 5 (Customer 3, Apartment 2) -->
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="reading_date" valueDate="2023-01-31T00:00:00"/>
+			<column name="value" valueNumeric="230.45"/>
+			<column name="created_at" valueDate="2023-02-01T11:00:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="reading_date" valueDate="2023-02-28T00:00:00"/>
+			<column name="value" valueNumeric="245.20"/>
+			<column name="created_at" valueDate="2023-03-01T11:00:00"/>
+		</insert>
+
+		<insert tableName="consumption">
+			<column name="id" valueSequenceNext="consumption_seq"/>
+			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="reading_date" valueDate="2023-03-31T00:00:00"/>
+			<column name="value" valueNumeric="208.70"/>
+			<column name="created_at" valueDate="2023-04-01T11:00:00"/>
+		</insert>
+	</changeSet>
+</databaseChangeLog>

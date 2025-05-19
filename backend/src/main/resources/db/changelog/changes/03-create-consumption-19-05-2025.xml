@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="03" author="liquibase">
+		<createTable tableName="consumption">
+			<column name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="metering_point_id" type="bigint">
+				<constraints nullable="false" foreignKeyName="fk_consumption_metering_point" references="metering_points(id)"/>
+			</column>
+			<column name="reading_date" type="datetime">
+				<constraints nullable="false"/>
+			</column>
+			<column name="value" type="decimal(10,2)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="consumption_seq" incrementBy="1" startValue="1"/>
+
+		<createIndex indexName="idx_consumption_metering_point" tableName="consumption">
+			<column name="metering_point_id"/>
+		</createIndex>
+
+		<createIndex indexName="idx_consumption_reading_date" tableName="consumption">
+			<column name="reading_date"/>
+		</createIndex>
+	</changeSet>
+</databaseChangeLog>
