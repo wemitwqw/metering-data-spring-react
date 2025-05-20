@@ -29,9 +29,6 @@ public class MeteringPoint {
 	@Column(nullable = false)
 	private String address;
 
-	@Column(nullable = false)
-	private boolean active;
-
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@CreationTimestamp
 	private LocalDateTime createdAt;
