@@ -6,10 +6,13 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -17,13 +20,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(InvalidLoginCredentialsException.class)
 	public ResponseEntity<ErrorResponse> handleTicketNotFoundByNumber(InvalidLoginCredentialsException ex) {
 		ErrorResponse errorResponse = new ErrorResponse(
-				HttpStatus.NOT_FOUND.value(),
+				HttpStatus.UNAUTHORIZED.value(),
 				LocalDateTime.now(),
 				ex.getMessage(),
 				null
 		);
 
-		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -44,5 +47,44 @@ public class GlobalExceptionHandler {
 		);
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(NoResourceFoundException.class)
+	public ResponseEntity<ErrorResponse> handleNoResourceFoundExceptions(NoResourceFoundException ex) {
+		ErrorResponse errorResponse = new ErrorResponse(
+				HttpStatus.BAD_REQUEST.value(),
+				LocalDateTime.now(),
+				ex.getLocalizedMessage(),
+				null
+		);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
+		ErrorResponse errorResponse = new ErrorResponse(
+				HttpStatus.FORBIDDEN.value(),
+				LocalDateTime.now(),
+				ex.getLocalizedMessage(),
+				null
+		);
+		return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+	}
+
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
+			MissingServletRequestParameterException ex) {
+
+		ErrorResponse errorResponse = new ErrorResponse(
+				HttpStatus.BAD_REQUEST.value(),
+				LocalDateTime.now(),
+				ex.getMessage(),
+				null
+		);
+
+		return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body(errorResponse);
 	}
 }

@@ -26,6 +26,7 @@ public class SpringSecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthFilter;
 	private final CustomerDetailsService customerDetailsService;
 	private final PasswordEncoder passwordEncoder;
+	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
@@ -39,6 +40,9 @@ public class SpringSecurityConfig {
 						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 						.anyRequest().authenticated()
 				)
+//				.exceptionHandling(exceptionHandling ->
+//						exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint)
+//				)
 				.authenticationManager(authManager)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
