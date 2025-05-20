@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MeteringPointDTO {
-		private Long id;
 		private String address;
 		private String meterId;
 }

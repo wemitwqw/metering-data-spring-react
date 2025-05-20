@@ -10,8 +10,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MeteringPointMapper {
-
-	@Mapping(target = "id", source = "id")
+	
 	@Mapping(target = "address", source = "address")
 	@Mapping(target = "meterId", source = "meterId")
 	MeteringPointDTO meteringPointToMeteringPointDTO(MeteringPoint meteringPoint);

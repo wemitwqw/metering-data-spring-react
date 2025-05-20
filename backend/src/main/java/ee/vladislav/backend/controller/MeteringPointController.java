@@ -20,7 +20,7 @@ public class MeteringPointController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<MeteringPointDTO>> fetchConsumption() {
+	public ResponseEntity<List<MeteringPointDTO>> fetchAllMeteringPoints() {
 		return ResponseEntity.ok(meteringPointService.getMeteringPoints());
 	}
 }

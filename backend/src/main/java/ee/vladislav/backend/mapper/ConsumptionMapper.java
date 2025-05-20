@@ -9,6 +9,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {MeteringPointMapper.class})
 public interface ConsumptionMapper {
 
-	@Mapping(target = "meteringPoint", source = "meteringPoint")
+	@Mapping(target = "amount", source = "amount")
+	@Mapping(target = "amountUnit", source = "amountUnit")
+	@Mapping(target = "consumptionTime", source = "consumptionTime")
+	@Mapping(target = "createdAt", source = "createdAt")
 	ConsumptionDTO consumptionToConsumptionDTO(Consumption consumption);
 }

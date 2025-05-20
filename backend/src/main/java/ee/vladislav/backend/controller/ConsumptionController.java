@@ -22,7 +22,10 @@ public class ConsumptionController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<ConsumptionDTO>> fetchConsumption(@Valid @RequestParam Long year) {
-		return ResponseEntity.ok(consumptionService.getConsumption(year));
+	public ResponseEntity<List<ConsumptionDTO>> fetchConsumption(
+			@Valid @RequestParam Long meterId,
+			@Valid @RequestParam Long year
+	) {
+		return ResponseEntity.ok(consumptionService.getConsumptionByMeteringPoint(meterId, year));
 	}
 }

@@ -35,10 +35,7 @@ public class MeteringPointService {
 		return meteringPointMapper.meteringPointsToMeteringPointDTOs(userMeteringPoints);
 	}
 
-	public List<Long> getMeteringPointIds() {
-		Customer currentUser = authService.getCurrentUser().orElseThrow(() ->
-				new AccessDeniedException("User not authenticated or not a customer"));
-
-		return meteringPointRepository.findMeteringPointIdsByCustomerId(currentUser.getId());
+	public boolean validateMeteringPointAccess(Long meteringPointId, Long customerId) {
+		return meteringPointRepository.existsByIdAndCustomerId(meteringPointId, customerId);
 	}
 }

@@ -26,6 +26,9 @@ public class Consumption {
 	@Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal amount;
 
+	@Column(name = "amount_unit", nullable = false)
+	private String amountUnit;
+
 	@Column(name = "consumption_time", nullable = false)
 	private LocalDateTime consumptionTime;
 
