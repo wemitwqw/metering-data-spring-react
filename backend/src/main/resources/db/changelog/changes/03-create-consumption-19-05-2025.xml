@@ -13,10 +13,13 @@
 			<column name="metering_point_id" type="bigint">
 				<constraints nullable="false" foreignKeyName="fk_consumption_metering_point" references="metering_points(id)"/>
 			</column>
-			<column name="reading_date" type="datetime">
+			<column name="amount" type="decimal(10,2)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="value" type="decimal(10,2)">
+			<column name="amount_unit" type="varchar(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="consumption_time" type="datetime">
 				<constraints nullable="false"/>
 			</column>
 			<column name="created_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -30,8 +33,8 @@
 			<column name="metering_point_id"/>
 		</createIndex>
 
-		<createIndex indexName="idx_consumption_reading_date" tableName="consumption">
-			<column name="reading_date"/>
+		<createIndex indexName="idx_consumption_consumption_time" tableName="consumption">
+			<column name="consumption_time"/>
 		</createIndex>
 	</changeSet>
 </databaseChangeLog>
