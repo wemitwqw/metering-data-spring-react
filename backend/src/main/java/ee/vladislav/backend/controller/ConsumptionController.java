@@ -1,6 +1,7 @@
 package ee.vladislav.backend.controller;
 
 import ee.vladislav.backend.dto.ConsumptionDTO;
+import ee.vladislav.backend.dto.ConsumptionWithCostDTO;
 import ee.vladislav.backend.service.ConsumptionService;
 import jakarta.validation.Valid;
 
@@ -21,11 +22,19 @@ public class ConsumptionController {
 		this.consumptionService = consumptionService;
 	}
 
-	@GetMapping()
-	public ResponseEntity<List<ConsumptionDTO>> fetchConsumption(
+	@GetMapping("raw")
+	public ResponseEntity<List<ConsumptionDTO>> fetchRawConsumptions(
 			@Valid @RequestParam Long meterId,
 			@Valid @RequestParam Long year
 	) {
 		return ResponseEntity.ok(consumptionService.getConsumptionByMeteringPoint(meterId, year));
+	}
+
+	@GetMapping
+	public ResponseEntity<List<ConsumptionWithCostDTO>> fetchConsumptions(
+			@Valid @RequestParam Long meterId,
+			@Valid @RequestParam Long year
+	) {
+		return ResponseEntity.ok(consumptionService.getConsumptionWithCostByMeteringPoint(meterId, year));
 	}
 }
