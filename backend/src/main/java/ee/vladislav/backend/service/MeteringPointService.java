@@ -35,7 +35,14 @@ public class MeteringPointService {
 		return meteringPointMapper.meteringPointsToMeteringPointDTOs(userMeteringPoints);
 	}
 
-	public boolean validateMeteringPointAccess(Long meteringPointId, Long customerId) {
-		return meteringPointRepository.existsByIdAndCustomerId(meteringPointId, customerId);
+	public void validateUserAccess(Long meteringPointId) throws AccessDeniedException {
+		boolean hasAccess = meteringPointRepository.existsByIdAndCustomerId(
+				meteringPointId,
+				authService.getCurrentUserId()
+		);
+
+		if (!hasAccess) {
+			throw new AccessDeniedException("User does not have access to this metering point");
+		}
 	}
 }
