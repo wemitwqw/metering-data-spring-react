@@ -1,3 +1,4 @@
+name: metering-data-backend
 services:
   postgres:
     image: postgres:16-alpine
@@ -12,6 +13,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     platform: linux/arm64
+  redis:
+    image: redis:7-alpine
+    container_name: redis-cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --save 60 1 --loglevel warning
+    platform: linux/arm64
 
 volumes:
   postgres_data:
+  redis_data:
