@@ -93,15 +93,6 @@
 			<column name="created_at" valueDate="2025-05-16T09:00:00"/>
 		</insert>
 
-		<insert tableName="consumption">
-			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="1"/>
-			<column name="amount" valueNumeric="128.50"/>
-			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-05-20T00:00:00"/>
-			<column name="created_at" valueDate="2025-05-21T09:00:00"/>
-		</insert>
-
 		<!-- Metering Point 2 (Customer 1, Apartment 2) -->
 		<!-- January 2025 -->
 		<insert tableName="consumption">
@@ -187,15 +178,6 @@
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-05-16T09:30:00"/>
-		</insert>
-
-		<insert tableName="consumption">
-			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="2"/>
-			<column name="amount" valueNumeric="165.60"/>
-			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-05-20T00:00:00"/>
-			<column name="created_at" valueDate="2025-05-21T09:30:00"/>
 		</insert>
 
 		<!-- Metering Point 3 (Customer 2, Apartment) -->
@@ -285,15 +267,6 @@
 			<column name="created_at" valueDate="2025-05-16T10:00:00"/>
 		</insert>
 
-		<insert tableName="consumption">
-			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="3"/>
-			<column name="amount" valueNumeric="138.50"/>
-			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-05-20T00:00:00"/>
-			<column name="created_at" valueDate="2025-05-21T10:00:00"/>
-		</insert>
-
 		<!-- Metering Point 4 (Customer 3, Apartment 1) -->
 		<!-- January 2025 -->
 		<insert tableName="consumption">
@@ -381,15 +354,6 @@
 			<column name="created_at" valueDate="2025-05-16T10:30:00"/>
 		</insert>
 
-		<insert tableName="consumption">
-			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="4"/>
-			<column name="amount" valueNumeric="130.20"/>
-			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-05-20T00:00:00"/>
-			<column name="created_at" valueDate="2025-05-21T10:30:00"/>
-		</insert>
-
 		<!-- Metering Point 5 (Customer 3, Apartment 2) -->
 		<!-- January 2025 -->
 		<insert tableName="consumption">
@@ -475,15 +439,6 @@
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-05-16T11:00:00"/>
-		</insert>
-
-		<insert tableName="consumption">
-			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
-			<column name="amount" valueNumeric="170.80"/>
-			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-05-20T00:00:00"/>
-			<column name="created_at" valueDate="2025-05-21T11:00:00"/>
 		</insert>
 	</changeSet>
 </databaseChangeLog>
