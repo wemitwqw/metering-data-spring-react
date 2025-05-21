@@ -23,13 +23,18 @@ public class AppConfig {
 	}
 
 	@Bean
-	public RestTemplate restTemplate() {
-		RestTemplate restTemplate = new RestTemplate();
-
+	public ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
+
+		return objectMapper;
+	}
+
+	@Bean
+	public RestTemplate restTemplate(ObjectMapper objectMapper) {
+		RestTemplate restTemplate = new RestTemplate();
 
 		MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 		messageConverter.setObjectMapper(objectMapper);
