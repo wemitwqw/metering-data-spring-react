@@ -1,12 +1,15 @@
 package ee.vladislav.backend.config;
 
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -20,14 +23,19 @@ public class AppConfig {
 	}
 
 	@Bean
-	public ObjectMapper objectMapper() {
-		return Jackson2ObjectMapperBuilder.json()
-				.modules(new JavaTimeModule())
-				.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-				.build();
-	}
+	public RestTemplate restTemplate() {
+		RestTemplate restTemplate = new RestTemplate();
 
-	@Bean public RestTemplate restTemplate() {
-		return new RestTemplate();
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
+
+		MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+		messageConverter.setObjectMapper(objectMapper);
+
+		restTemplate.setMessageConverters(Collections.singletonList(messageConverter));
+
+		return restTemplate;
 	}
 }
