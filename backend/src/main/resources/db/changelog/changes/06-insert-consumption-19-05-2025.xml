@@ -99,7 +99,7 @@
 			<column name="amount" valueNumeric="128.50"/>
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-31T00:00:00"/>
-			<column name="created_at" valueDate="2025-06-01T09:00:00"/>
+			<column name="created_at" valueDate="2025-05-20T09:00:00"/>
 		</insert>
 
 		<!-- Metering Point 2 (Customer 1, Apartment 2) -->
@@ -195,7 +195,7 @@
 			<column name="amount" valueNumeric="165.60"/>
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-31T00:00:00"/>
-			<column name="created_at" valueDate="2025-06-01T09:30:00"/>
+			<column name="created_at" valueDate="2025-05-20T09:30:00"/>
 		</insert>
 
 		<!-- Metering Point 3 (Customer 2, Apartment) -->
@@ -291,7 +291,7 @@
 			<column name="amount" valueNumeric="138.50"/>
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-31T00:00:00"/>
-			<column name="created_at" valueDate="2025-06-01T10:00:00"/>
+			<column name="created_at" valueDate="2025-05-20T10:00:00"/>
 		</insert>
 
 		<!-- Metering Point 4 (Customer 3, Apartment 1) -->
@@ -387,7 +387,7 @@
 			<column name="amount" valueNumeric="130.20"/>
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-31T00:00:00"/>
-			<column name="created_at" valueDate="2025-06-01T10:30:00"/>
+			<column name="created_at" valueDate="2025-05-20T10:30:00"/>
 		</insert>
 
 		<!-- Metering Point 5 (Customer 3, Apartment 2) -->
@@ -483,7 +483,7 @@
 			<column name="amount" valueNumeric="170.80"/>
 			<column name="amount_unit" value="kW"/>
 			<column name="consumption_time" valueDate="2025-05-31T00:00:00"/>
-			<column name="created_at" valueDate="2025-06-01T11:00:00"/>
+			<column name="created_at" valueDate="2025-05-20T11:00:00"/>
 		</insert>
 	</changeSet>
 </databaseChangeLog>
