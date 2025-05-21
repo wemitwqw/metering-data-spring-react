@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { meteringPointsApi } from '../services/meteringPointService';
+import { meteringPointsApi } from '../services/meteringPointsService';
 import { ERROR_MESSAGES } from '../utils/constants';
 import { useAuthStore } from '../stores/useAuthStore';
-import { setAuthToken } from '../services/meteringPointService';
+import { setAuthToken } from '../services/meteringPointsService';
 
 export interface MeteringPoint {
   address: string;

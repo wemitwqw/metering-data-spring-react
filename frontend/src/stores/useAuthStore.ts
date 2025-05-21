@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { authApi, setAuthToken } from '../services/meteringPointService';
+import { authApi, setAuthToken } from '../services/meteringPointsService';
 import { ERROR_MESSAGES, STORAGE_KEYS } from '../utils/constants';
 
 interface User {

@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
-import { initializeApi, setAuthToken } from './services/meteringPointService';
+import { initializeApi, setAuthToken } from './services/meteringPointsService';
 import { createTheme } from '@mui/material/styles';
 import { ROUTES } from './utils/constants';
 
