@@ -26,7 +26,6 @@ public class SpringSecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthFilter;
 	private final CustomerDetailsService customerDetailsService;
 	private final PasswordEncoder passwordEncoder;
-	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
@@ -37,12 +36,12 @@ public class SpringSecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/api/auth/**").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+						.requestMatchers(
+								"/swagger-ui/**",
+								"/v3/api-docs/**",
+								"/swagger-ui.html").permitAll()
 						.anyRequest().authenticated()
 				)
-//				.exceptionHandling(exceptionHandling ->
-//						exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint)
-//				)
 				.authenticationManager(authManager)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -61,7 +60,7 @@ public class SpringSecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
 		configuration.setAllowCredentials(true);

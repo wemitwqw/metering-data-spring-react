@@ -1,5 +1,8 @@
 package ee.vladislav.backend.config;
 
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.OpenAPI;
+
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -42,5 +45,14 @@ public class AppConfig {
 		restTemplate.setMessageConverters(Collections.singletonList(messageConverter));
 
 		return restTemplate;
+	}
+
+	@Bean
+	public OpenAPI meteringDataOpenApi() {
+		return new OpenAPI()
+				.info(new Info()
+						.title("Metering Data Asessment API Documentation")
+						.description("REST API for the Ticketing Backend application")
+						.version("v1.0.0"));
 	}
 }
