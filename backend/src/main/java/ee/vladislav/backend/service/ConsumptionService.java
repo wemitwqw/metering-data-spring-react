@@ -17,30 +17,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ConsumptionService {
 	private final AuthService authService;
 	private final ConsumptionRepository consumptionRepository;
 	private final ConsumptionMapper consumptionMapper;
 	private final MeteringPointService meteringPointService;
 	private final PriceService priceService;
-
-	public ConsumptionService(
-			AuthService authService,
-			ConsumptionRepository consumptionRepository,
-			ConsumptionMapper consumptionMapper,
-			MeteringPointService meteringPointService,
-			PriceService priceService
-	) {
-		this.authService = authService;
-		this.consumptionRepository = consumptionRepository;
-		this.consumptionMapper = consumptionMapper;
-		this.meteringPointService = meteringPointService;
-		this.priceService = priceService;
-	}
 
 	@Transactional
 	public List<ConsumptionDTO> getConsumptionByMeteringPoint(Long meteringPointId, Long year) {
