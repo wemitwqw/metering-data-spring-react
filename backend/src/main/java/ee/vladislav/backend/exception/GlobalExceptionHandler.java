@@ -19,7 +19,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(InvalidLoginCredentialsException.class)
-	public ResponseEntity<ErrorResponse> handleTicketNotFoundByNumber(InvalidLoginCredentialsException ex) {
+	public ResponseEntity<ErrorResponse> handleInvalidLoginCredentialsException(InvalidLoginCredentialsException ex) {
 		ErrorResponse errorResponse = new ErrorResponse(
 				HttpStatus.UNAUTHORIZED.value(),
 				LocalDateTime.now(),
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+	public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 		Map<String, String> validationErrors = new HashMap<>();
 
 		ex.getBindingResult().getAllErrors().forEach(error -> {
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(NoResourceFoundException.class)
-	public ResponseEntity<ErrorResponse> handleNoResourceFoundExceptions(NoResourceFoundException ex) {
+	public ResponseEntity<ErrorResponse> handleNoResourceFoundException(NoResourceFoundException ex) {
 		ErrorResponse errorResponse = new ErrorResponse(
 				HttpStatus.BAD_REQUEST.value(),
 				LocalDateTime.now(),
