@@ -32,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation("io.jsonwebtoken:jjwt:0.12.6")
 	implementation("com.fasterxml.jackson.core:jackson-core:2.19.0")
-	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0")
 	implementation 'org.liquibase:liquibase-core'
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
