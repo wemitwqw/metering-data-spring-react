@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -61,5 +62,12 @@ public class AuthService {
 		}
 
 		return Optional.empty();
+	}
+
+	public Long getCurrentUserId() {
+		Customer currentUserId = getCurrentUser().orElseThrow(() ->
+				new AccessDeniedException("User not authenticated or not a customer"));
+
+		return currentUserId.getId();
 	}
 }
