@@ -70,7 +70,7 @@ const Dashboard = () => {
           px: 3
         }}>
           <Typography variant="h6">
-            Energy Meter Dashboard
+            Dashboard
           </Typography>
           
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -183,7 +183,7 @@ const Dashboard = () => {
       >
         <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
           <Typography variant="body2" color="text.secondary" align="center">
-            Energy Meter Dashboard © {new Date().getFullYear()}
+            Metering Data Asessment - 2025
           </Typography>
         </Box>
       </Box>
