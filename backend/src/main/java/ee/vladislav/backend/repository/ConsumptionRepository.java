@@ -8,7 +8,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConsumptionRepository extends JpaRepository<Consumption, Long> {
-	List<Consumption> findByMeteringPointIdAndConsumptionTimeBetween(
-			Long meteringPointId, LocalDateTime startDate, LocalDateTime endDate
+//	List<Consumption> findByMeteringPointIdAndConsumptionTimeBetween(
+//			Long meteringPointId, LocalDateTime startDate, LocalDateTime endDate
+//	);
+
+	List<Consumption> findByMeteringPoint_MeterIdAndConsumptionTimeBetween(
+			String meterId, LocalDateTime startDate, LocalDateTime endDate
 	);
 }

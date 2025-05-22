@@ -35,8 +35,8 @@ public class MeteringPointService {
 		return meteringPointMapper.meteringPointsToMeteringPointDTOs(userMeteringPoints);
 	}
 
-	public void validateUserAccess(Long meteringPointId) throws AccessDeniedException {
-		boolean hasAccess = meteringPointRepository.existsByIdAndCustomerId(
+	public void validateUserAccess(String meteringPointId) throws AccessDeniedException {
+		boolean hasAccess = meteringPointRepository.existsByMeterIdAndCustomerId(
 				meteringPointId,
 				authService.getCurrentUserId()
 		);

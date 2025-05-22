@@ -10,4 +10,6 @@ public interface MeteringPointRepository extends JpaRepository<MeteringPoint, Lo
 	List<MeteringPoint> findByCustomerId(Long customerId);
 
 	boolean existsByIdAndCustomerId(Long id, Long customerId);
+
+	boolean existsByMeterIdAndCustomerId(String id, Long customerId);
 }

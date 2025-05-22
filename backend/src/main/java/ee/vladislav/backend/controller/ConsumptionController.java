@@ -24,7 +24,7 @@ public class ConsumptionController {
 
 	@GetMapping("raw")
 	public ResponseEntity<List<ConsumptionDTO>> fetchRawConsumptions(
-			@Valid @RequestParam Long meterId,
+			@Valid @RequestParam String meterId,
 			@Valid @RequestParam Long year
 	) {
 		return ResponseEntity.ok(consumptionService.getConsumptionByMeteringPoint(meterId, year));
@@ -32,7 +32,7 @@ public class ConsumptionController {
 
 	@GetMapping
 	public ResponseEntity<List<ConsumptionWithCostDTO>> fetchConsumptions(
-			@Valid @RequestParam Long meterId,
+			@Valid @RequestParam String meterId,
 			@Valid @RequestParam Long year
 	) {
 		return ResponseEntity.ok(consumptionService.getConsumptionWithCostByMeteringPoint(meterId, year));

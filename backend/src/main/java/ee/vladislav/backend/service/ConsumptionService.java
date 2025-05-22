@@ -32,7 +32,7 @@ public class ConsumptionService {
 	private final PriceService priceService;
 
 	@Transactional
-	public List<ConsumptionDTO> getConsumptionByMeteringPoint(Long meteringPointId, Long year) {
+	public List<ConsumptionDTO> getConsumptionByMeteringPoint(String meteringPointId, Long year) {
 		List<Consumption> consumptions = fetchConsumptionData(meteringPointId, year);
 
 		return consumptions.stream()
@@ -41,7 +41,7 @@ public class ConsumptionService {
 	}
 
 	@Transactional
-	public List<ConsumptionWithCostDTO> getConsumptionWithCostByMeteringPoint(Long meteringPointId, Long year) {
+	public List<ConsumptionWithCostDTO> getConsumptionWithCostByMeteringPoint(String meteringPointId, Long year) {
 		List<Consumption> consumptions = fetchConsumptionData(meteringPointId, year);
 
 		Map<Month, ConsumptionWithCostDTO> monthlyTotals = groupConsumptionByMonth(consumptions);
@@ -54,13 +54,13 @@ public class ConsumptionService {
 		return result;
 	}
 
-	private List<Consumption> fetchConsumptionData(Long meteringPointId, Long year) {
+	private List<Consumption> fetchConsumptionData(String meteringPointId, Long year) {
 		meteringPointService.validateUserAccess(meteringPointId);
 
 		LocalDateTime startDate = LocalDateTime.of(year.intValue(), 1, 1, 0, 0, 0);
 		LocalDateTime endDate = LocalDateTime.of(year.intValue(), 12, 31, 23, 59, 59);
 
-		return consumptionRepository.findByMeteringPointIdAndConsumptionTimeBetween(
+		return consumptionRepository.findByMeteringPoint_MeterIdAndConsumptionTimeBetween(
 				meteringPointId, startDate, endDate
 		);
 	}
