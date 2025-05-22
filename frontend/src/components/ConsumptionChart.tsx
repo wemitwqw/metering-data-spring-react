@@ -29,7 +29,6 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
     onYearChange(year);
   };
   
-  // Prepare data for the chart
   const chartData = consumptions.map(consumption => ({
     month: consumption.month.charAt(0) + consumption.month.slice(1).toLowerCase(),
     amount: consumption.amount,
@@ -97,7 +96,6 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
           </Typography>
         ) : (
           <>
-            {/* Summary Cards */}
             <Box sx={{ 
               display: 'grid', 
               gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' }, 
@@ -136,7 +134,6 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
               </Card>
             </Box>
             
-            {/* Consumption Chart */}
             <Box sx={{ height: 400, width: '100%' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -164,24 +161,31 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
                     tick={{ fontSize: 12 }}
                   />
                   <Tooltip 
-                    formatter={(value, name) => [
-                      name === 'amount' ? `${value} kWh` : `€${Number(value).toFixed(2)}`,
-                      name === 'amount' ? 'Consumption' : 
-                      name === 'costWithVat' ? 'Cost (with VAT)' : 'Cost (without VAT)'
-                    ]}
+                    formatter={(value, name) => {
+                      if (name === 'Consumption') {
+                        return [`${value} kWh`, 'Consumption'];
+                      }
+                      return [`€${Number(value).toFixed(2)}`, name];
+                    }}
                   />
                   <Legend />
                   <Bar 
                     yAxisId="left"
                     dataKey="amount" 
                     fill="#1976d2" 
-                    name="Consumption (kWh)"
+                    name="Consumption"
                   />
                   <Bar 
                     yAxisId="right"
                     dataKey="costWithVat" 
                     fill="#dc004e" 
-                    name="Cost with VAT (€)"
+                    name="Cost (with VAT)"
+                  />
+                  <Bar 
+                    yAxisId="right"
+                    dataKey="costWithoutVat" 
+                    fill="#ff9800" 
+                    name="Cost (without VAT)"
                   />
                 </BarChart>
               </ResponsiveContainer>
