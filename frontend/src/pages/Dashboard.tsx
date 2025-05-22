@@ -14,21 +14,23 @@ import {
 } from '@mui/material';
 import { useMeteringPointsStore } from '../stores/useMeteringPointsStore';
 import { useAuthStore } from '../stores/useAuthStore';
+import { meteringPointsService } from '../services/meteringPointsService';
+import { authService } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { meteringPoints, isLoading, error, fetchMeteringPoints } = useMeteringPointsStore();
-  const { user, logout, isAuthenticated, token } = useAuthStore();
+  const { meteringPoints, isLoading, error } = useMeteringPointsStore();
+  const { user, isAuthenticated } = useAuthStore();
   const [selectedMeteringPoint, setSelectedMeteringPoint] = useState('');
   
   useEffect(() => {
-    if (isAuthenticated && token) {
-      fetchMeteringPoints().catch((err) => {
-        console.error('Error fetching addresses:', err);
+    if (isAuthenticated) {
+      meteringPointsService.fetchMeteringPoints().catch((err) => {
+        console.error('Error fetching metering points:', err);
       });
     }
-  }, [fetchMeteringPoints, isAuthenticated, token]);
+  }, [isAuthenticated]);
   
   useEffect(() => {
     if (meteringPoints.length > 0 && !selectedMeteringPoint) {
@@ -37,7 +39,7 @@ const Dashboard = () => {
   }, [meteringPoints, selectedMeteringPoint]);
   
   const handleLogout = () => {
-    logout();
+    authService.logout();
     navigate('/login');
   };
   

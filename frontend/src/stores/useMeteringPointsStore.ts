@@ -1,8 +1,4 @@
 import { create } from 'zustand';
-import { meteringPointsApi } from '../services/meteringPointsService';
-import { ERROR_MESSAGES } from '../utils/constants';
-import { useAuthStore } from '../stores/useAuthStore';
-import { setAuthToken } from '../services/meteringPointsService';
 
 export interface MeteringPoint {
   address: string;
@@ -13,8 +9,12 @@ interface MeteringPointState {
   meteringPoints: MeteringPoint[];
   isLoading: boolean;
   error: string | null;
-  fetchMeteringPoints: () => Promise<void>;
+  
+  setMeteringPoints: (points: MeteringPoint[]) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
   clearError: () => void;
+  reset: () => void;
 }
 
 export const useMeteringPointsStore = create<MeteringPointState>((set) => ({
@@ -22,25 +22,23 @@ export const useMeteringPointsStore = create<MeteringPointState>((set) => ({
   isLoading: false,
   error: null,
   
-  fetchMeteringPoints: async () => {
-    set({ isLoading: true, error: null });
-    
-    try {
-      const token = useAuthStore.getState().token;
-      if (token) {
-        setAuthToken(token);
-      }
-      
-      const response = await meteringPointsApi.fetchMeteringPoints();
-      set({ meteringPoints: response.data, isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.response?.data?.message || ERROR_MESSAGES.FETCH_ADDRESSES_FAILED
-      });
-      throw error;
-    }
+  setMeteringPoints: (points: MeteringPoint[]) => {
+    set({ meteringPoints: points, error: null });
   },
   
-  clearError: () => set({ error: null })
+  setLoading: (loading: boolean) => {
+    set({ isLoading: loading });
+  },
+  
+  setError: (error: string | null) => {
+    set({ error });
+  },
+  
+  clearError: () => {
+    set({ error: null });
+  },
+  
+  reset: () => {
+    set({ meteringPoints: [], isLoading: false, error: null });
+  }
 }));

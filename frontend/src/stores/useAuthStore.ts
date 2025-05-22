@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { authApi, setAuthToken } from '../services/meteringPointsService';
-import { ERROR_MESSAGES, STORAGE_KEYS } from '../utils/constants';
+import { STORAGE_KEYS } from '../utils/constants';
 
 interface User {
   email: string;
@@ -15,8 +14,11 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+
+  setAuthData: (token: string, user: User) => void;
+  clearAuth: () => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
   clearError: () => void;
 }
 
@@ -28,37 +30,17 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: false,
       error: null,
-      
-      login: async (email: string, password: string) => {
-        set({ isLoading: true, error: null });
-        
-        try {
-          const response = await authApi.login(email, password);
-          
-          const { token, email: userEmail, firstName, lastName } = response.data;
 
-          setAuthToken(token);
-          
-          set({
-            token,
-            user: { email: userEmail, firstName, lastName },
-            isAuthenticated: true,
-            isLoading: false,
-            error: null
-          });
-          
-        } catch (error: any) {
-          set({
-            isLoading: false,
-            error: error.response?.data?.message || ERROR_MESSAGES.LOGIN_FAILED
-          });
-          throw error;
-        }
+      setAuthData: (token: string, user: User) => {
+        set({
+          token,
+          user,
+          isAuthenticated: true,
+          error: null
+        });
       },
       
-      logout: () => {
-        setAuthToken(null);
-        
+      clearAuth: () => {
         set({
           token: null,
           user: null,
@@ -67,7 +49,17 @@ export const useAuthStore = create<AuthState>()(
         });
       },
       
-      clearError: () => set({ error: null })
+      setLoading: (loading: boolean) => {
+        set({ isLoading: loading });
+      },
+      
+      setError: (error: string | null) => {
+        set({ error });
+      },
+      
+      clearError: () => {
+        set({ error: null });
+      }
     }),
     {
       name: STORAGE_KEYS.AUTH_STORE,

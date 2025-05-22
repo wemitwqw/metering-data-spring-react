@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
-import { initializeApi, setAuthToken } from './services/meteringPointsService';
 import { createTheme } from '@mui/material/styles';
 import { ROUTES } from './utils/constants';
 
@@ -43,14 +41,6 @@ const theme = createTheme({
 
 function App() {
   const { token } = useAuthStore();
-  
-  useEffect(() => {
-    initializeApi();
-
-    if (token) {
-      setAuthToken(token);
-    }
-  }, [token]);
   
   return (
     <ThemeProvider theme={theme}>

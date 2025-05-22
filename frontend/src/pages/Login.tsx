@@ -10,12 +10,13 @@ import {
   CircularProgress
 } from '@mui/material';
 import { useAuthStore } from '../stores/useAuthStore';
+import { authService } from '../services/authService';
 import ErrorMessage from '../components/ErrorMessage';
 import { ERROR_MESSAGES, ROUTES, APP_NAME } from '../utils/constants';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, isLoading, error, clearError } = useAuthStore();
+  const { isLoading, error, clearError } = useAuthStore();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,7 +39,7 @@ const Login = () => {
     }
     
     try {
-      await login(email, password);
+      await authService.login(email, password);
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
       console.error('Login error:', error);
