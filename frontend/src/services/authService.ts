@@ -1,6 +1,7 @@
 import api from '../utils/axios';
 import { useAuthStore } from '../stores/useAuthStore';
 import { ERROR_MESSAGES } from '../utils/constants';
+import { useMeteringPointsStore } from '../stores/useMeteringPointsStore';
 
 interface LoginResponse {
   token: string;
@@ -49,6 +50,8 @@ class AuthService {
   
   logout(): void {
     const { clearAuth } = useAuthStore.getState();
+    const { reset } = useMeteringPointsStore.getState();
+    reset();
     clearAuth();
   }
   

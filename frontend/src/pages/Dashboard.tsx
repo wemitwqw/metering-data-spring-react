@@ -48,6 +48,14 @@ const Dashboard = () => {
   };
   
   const selectedMeterData = meteringPoints.find(point => point.meterId === selectedMeteringPoint);
+
+  // if (isLoading) {
+  //   return (
+  //     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
   
   return (
     <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
