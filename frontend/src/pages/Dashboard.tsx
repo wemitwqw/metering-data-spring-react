@@ -13,14 +13,18 @@ import {
   CardContent
 } from '@mui/material';
 import { useMeteringPointsStore } from '../stores/useMeteringPointsStore';
+import { useConsumptionStore } from '../stores/useConsumptionStore';
 import { useAuthStore } from '../stores/useAuthStore';
 import { meteringPointsService } from '../services/meteringPointsService';
+import { consumptionService } from '../services/consumptionService';
 import { authService } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
+import ConsumptionChart from '../components/ConsumptionChart';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { meteringPoints, isLoading, error } = useMeteringPointsStore();
+  const { selectedYear } = useConsumptionStore();
   const { user, isAuthenticated } = useAuthStore();
   const [selectedMeteringPoint, setSelectedMeteringPoint] = useState('');
   
@@ -38,6 +42,15 @@ const Dashboard = () => {
     }
   }, [meteringPoints, selectedMeteringPoint]);
   
+  useEffect(() => {
+    if (selectedMeteringPoint && selectedYear) {
+      consumptionService.fetchConsumptions(selectedMeteringPoint, selectedYear).catch((err) => {
+        console.error('Error fetching consumption data:', err);
+      });
+    }
+    
+  }, [selectedMeteringPoint, selectedYear]);
+  
   const handleLogout = () => {
     authService.logout();
     navigate('/login');
@@ -47,15 +60,12 @@ const Dashboard = () => {
     setSelectedMeteringPoint(event.target.value);
   };
   
+  const handleYearChange = (year: number) => {
+    const { setSelectedYear } = useConsumptionStore.getState();
+    setSelectedYear(year);
+  };
+  
   const selectedMeterData = meteringPoints.find(point => point.meterId === selectedMeteringPoint);
-
-  // if (isLoading) {
-  //   return (
-  //     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
   
   return (
     <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -73,7 +83,7 @@ const Dashboard = () => {
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
-          maxWidth: 'md',
+          maxWidth: 'lg',
           mx: 'auto',
           px: 3
         }}>
@@ -114,7 +124,7 @@ const Dashboard = () => {
       <Box 
         component="main" 
         sx={{ 
-          maxWidth: 'md', 
+          maxWidth: 'lg', 
           width: '100%', 
           mx: 'auto', 
           px: 3, 
@@ -128,7 +138,7 @@ const Dashboard = () => {
               Your Metering Points
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Select a metering point from the dropdown below
+              Select a metering point from the dropdown below to view consumption data
             </Typography>
           </Box>
           
@@ -175,6 +185,11 @@ const Dashboard = () => {
                   </CardContent>
                 </Card>
               )}
+              
+              <ConsumptionChart 
+                selectedMeterId={selectedMeteringPoint}
+                onYearChange={handleYearChange}
+              />
             </Box>
           )}
         </Paper>
@@ -189,7 +204,7 @@ const Dashboard = () => {
           backgroundColor: (theme) => theme.palette.grey[200]
         }}
       >
-        <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
+        <Box sx={{ maxWidth: 'lg', mx: 'auto' }}>
           <Typography variant="body2" color="text.secondary" align="center">
             Metering Data Asessment - 2025
           </Typography>
