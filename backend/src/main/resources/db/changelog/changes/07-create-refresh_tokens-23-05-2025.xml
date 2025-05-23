@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="07" author="liquibase">
+		<createTable tableName="refresh_tokens">
+			<column name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="token" type="varchar(1000)">
+				<constraints unique="true" nullable="false"/>
+			</column>
+			<column name="customer_id" type="bigint">
+				<constraints unique="true" nullable="false" foreignKeyName="fk_refresh_token_customer" references="customers(id)" deleteCascade="true"/>
+			</column>
+			<column name="expires_at" type="datetime">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="refresh_tokens_seq" incrementBy="1" startValue="1"/>
+
+		<createIndex indexName="idx_refresh_tokens_token" tableName="refresh_tokens">
+			<column name="token"/>
+		</createIndex>
+
+		<createIndex indexName="idx_refresh_tokens_expires_at" tableName="refresh_tokens">
+			<column name="expires_at"/>
+		</createIndex>
+
+		<createIndex indexName="idx_refresh_tokens_customer" tableName="refresh_tokens">
+			<column name="customer_id"/>
+		</createIndex>
+	</changeSet>
+</databaseChangeLog>
