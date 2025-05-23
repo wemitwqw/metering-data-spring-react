@@ -1,5 +1,5 @@
 import api from '../../utils/axios';
-import { authService } from '../../services/authService';
+import { authService } from '../auth.service';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useMeteringPointsStore } from '../../stores/useMeteringPointsStore';
 import { ERROR_MESSAGES } from '../../utils/constants';

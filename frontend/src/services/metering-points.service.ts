@@ -1,6 +1,6 @@
 import api from '../utils/axios';
 import { useMeteringPointsStore, type MeteringPoint } from '../stores/useMeteringPointsStore';
-import { ERROR_MESSAGES } from '../utils/constants';
+import { ERROR_MESSAGES, API_ENDPOINTS } from '../utils/constants';
 
 class MeteringPointsService {
   async fetchMeteringPoints(): Promise<MeteringPoint[]> {
@@ -10,7 +10,7 @@ class MeteringPointsService {
     clearError();
     
     try {
-      const response = await api.get<MeteringPoint[]>('/metering-points');
+      const response = await api.get<MeteringPoint[]>(API_ENDPOINTS.METERING_POINTS);
 
       setMeteringPoints(response.data);
       

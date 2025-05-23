@@ -1,5 +1,5 @@
 import api from '../../utils/axios';
-import { consumptionService } from '../../services/consumptionService';
+import { consumptionService } from '../consumptions.service';
 import { useConsumptionStore, type Consumption } from '../../stores/useConsumptionStore';
 import { ERROR_MESSAGES } from '../../utils/constants';
 

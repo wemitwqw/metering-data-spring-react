@@ -1,5 +1,5 @@
 import api from '../../utils/axios';
-import { meteringPointsService } from '../../services/meteringPointsService';
+import { meteringPointsService } from '../metering-points.service';
 import { useMeteringPointsStore, type MeteringPoint } from '../../stores/useMeteringPointsStore';
 import { ERROR_MESSAGES } from '../../utils/constants';
 

@@ -1,6 +1,6 @@
 import api from '../utils/axios';
 import { useConsumptionStore, type Consumption } from '../stores/useConsumptionStore';
-import { ERROR_MESSAGES } from '../utils/constants';
+import { ERROR_MESSAGES, API_ENDPOINTS } from '../utils/constants';
 
 class ConsumptionService {
   async fetchConsumptions(meterId: string, year: number): Promise<Consumption[]> {
@@ -10,7 +10,7 @@ class ConsumptionService {
     clearError();
     
     try {
-      const response = await api.get<Consumption[]>('/consumptions', {
+      const response = await api.get<Consumption[]>(API_ENDPOINTS.CONSUMPTIONS, {
         params: {
           meterId,
           year
