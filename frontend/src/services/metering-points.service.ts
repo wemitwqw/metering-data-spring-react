@@ -1,6 +1,7 @@
 import api from '../utils/axios';
-import { useMeteringPointsStore, type MeteringPoint } from '../stores/useMeteringPointsStore';
+import { useMeteringPointsStore } from '../stores/useMeteringPointsStore';
 import { ERROR_MESSAGES, API_ENDPOINTS } from '../utils/constants';
+import { MeteringPoint } from 'src/types/metering-point.type';
 
 class MeteringPointsService {
   async fetchMeteringPoints(): Promise<MeteringPoint[]> {
@@ -16,7 +17,7 @@ class MeteringPointsService {
       
       return response.data;
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || ERROR_MESSAGES.FETCH_ADDRESSES_FAILED;
+      const errorMessage = error.response?.data?.message || ERROR_MESSAGES.FETCH_METERING_POINTS_FAILED;
       setError(errorMessage);
       throw error;
     } finally {

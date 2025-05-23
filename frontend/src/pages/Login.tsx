@@ -10,7 +10,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import { useAuthStore } from '../stores/useAuthStore';
-import { authService } from '../services/authService';
+import { authService } from '../services/auth.service';
 import ErrorMessage from '../components/ErrorMessage';
 import { ROUTES, APP_NAME } from '../utils/constants';
 import { validateForm } from '../utils/form.validator';

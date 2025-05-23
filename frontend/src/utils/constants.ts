@@ -18,7 +18,7 @@ export const ROUTES = {
 
 export const ERROR_MESSAGES = {
   LOGIN_FAILED: 'Login failed. Please check your credentials and try again.',
-  FETCH_ADDRESSES_FAILED: 'Failed to fetch your metering points. Please try again later.',
+  FETCH_METERING_POINTS_FAILED: 'Failed to fetch your metering points. Please try again later.',
   FETCH_CONSUMPTIONS_FAILED: 'Failed to fetch consumption data. Please try again later.',
   TOKEN_REFRESH_FAILED: 'Session expired. Please log in again.',
   GENERIC_ERROR: 'Something went wrong. Please try again later.',

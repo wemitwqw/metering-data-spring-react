@@ -15,9 +15,9 @@ import {
 import { useMeteringPointsStore } from '../stores/useMeteringPointsStore';
 import { useConsumptionStore } from '../stores/useConsumptionStore';
 import { useAuthStore } from '../stores/useAuthStore';
-import { meteringPointsService } from '../services/meteringPointsService';
-import { consumptionService } from '../services/consumptionService';
-import { authService } from '../services/authService';
+import { meteringPointsService } from '../services/metering-points.service';
+import { consumptionService } from '../services/consumptions.service';
+import { authService } from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
 import ConsumptionChart from '../components/ConsumptionChart';
 

@@ -1,27 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { STORAGE_KEYS } from '../utils/constants';
-
-interface User {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
-interface AuthState {
-  accessToken: string | null;
-  refreshToken: string | null;
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-
-  setAuthData: (accessToken: string, refreshToken: string, user: User) => void;
-  clearAuth: () => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
-  clearError: () => void;
-}
+import { User, AuthState } from 'src/types/auth.type';
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -32,14 +12,29 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: false,
       error: null,
+      accessTokenExpiresAt: null,
+      refreshTokenExpiresAt: null,
+      isSessionError: false,
 
-      setAuthData: (accessToken: string, refreshToken: string, user: User) => {
+      setAuthData: (
+        accessToken: string, 
+        refreshToken: string, 
+        user: User,
+        accessTokenExpiresInSeconds: number,
+        refreshTokenExpiresInSeconds: number
+      ) => {
+        const now = Date.now();
+        const accessTokenExpiresAt = now + (accessTokenExpiresInSeconds * 1000);
+        const refreshTokenExpiresAt = now + (refreshTokenExpiresInSeconds * 1000);
+
         set({
           accessToken,
           refreshToken,
           user,
           isAuthenticated: true,
-          error: null
+          error: null,
+          accessTokenExpiresAt,
+          refreshTokenExpiresAt
         });
       },
       
@@ -49,7 +44,9 @@ export const useAuthStore = create<AuthState>()(
           refreshToken: null,
           user: null,
           isAuthenticated: false,
-          error: null
+          error: null,
+          accessTokenExpiresAt: null,
+          refreshTokenExpiresAt: null
         });
       },
       
@@ -60,10 +57,10 @@ export const useAuthStore = create<AuthState>()(
       setError: (error: string | null) => {
         set({ error });
       },
-      
+
       clearError: () => {
         set({ error: null });
-      }
+      },
     }),
     {
       name: STORAGE_KEYS.AUTH_STORE,
@@ -71,8 +68,11 @@ export const useAuthStore = create<AuthState>()(
         accessToken: state.accessToken, 
         refreshToken: state.refreshToken,
         user: state.user, 
-        isAuthenticated: state.isAuthenticated 
-      })
+        isAuthenticated: state.isAuthenticated,
+        accessTokenExpiresAt: state.accessTokenExpiresAt,
+        refreshTokenExpiresAt: state.refreshTokenExpiresAt,
+        error: state.error,
+      }),
     }
   )
 );

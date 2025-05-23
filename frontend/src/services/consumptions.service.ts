@@ -1,6 +1,7 @@
 import api from '../utils/axios';
-import { useConsumptionStore, type Consumption } from '../stores/useConsumptionStore';
+import { useConsumptionStore } from '../stores/useConsumptionStore';
 import { ERROR_MESSAGES, API_ENDPOINTS } from '../utils/constants';
+import { Consumption } from 'src/types/consumption.type';
 
 class ConsumptionService {
   async fetchConsumptions(meterId: string, year: number): Promise<Consumption[]> {
