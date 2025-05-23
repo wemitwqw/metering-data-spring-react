@@ -12,7 +12,8 @@ import {
 import { useAuthStore } from '../stores/useAuthStore';
 import { authService } from '../services/authService';
 import ErrorMessage from '../components/ErrorMessage';
-import { ERROR_MESSAGES, ROUTES, APP_NAME } from '../utils/constants';
+import { ROUTES, APP_NAME } from '../utils/constants';
+import { validateForm } from '../utils/form.validator';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,15 +29,7 @@ const Login = () => {
     setFormError('');
     clearError();
     
-    if (!email) {
-      setFormError(ERROR_MESSAGES.REQUIRED_FIELD);
-      return;
-    }
-    
-    if (!password) {
-      setFormError(ERROR_MESSAGES.REQUIRED_FIELD);
-      return;
-    }
+    validateForm(email, password, setFormError);
     
     try {
       await authService.login(email, password);
