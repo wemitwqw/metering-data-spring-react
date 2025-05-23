@@ -8,6 +8,7 @@ import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
+@EnableScheduling
 public class AppConfig {
 
 	@Bean
@@ -51,7 +53,7 @@ public class AppConfig {
 	public OpenAPI meteringDataOpenApi() {
 		return new OpenAPI()
 				.info(new Info()
-						.title("Metering Data Asessment API Documentation")
+						.title("Metering Data Assessment API Documentation")
 						.description("REST API for the Ticketing Backend application")
 						.version("v1.0.0"));
 	}
