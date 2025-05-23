@@ -40,7 +40,7 @@ const theme = createTheme({
 });
 
 function App() {
-  const { token } = useAuthStore();
+  const { accessToken } = useAuthStore();
   
   return (
     <ThemeProvider theme={theme}>
@@ -56,7 +56,7 @@ function App() {
           <Route 
             path="*" 
             element={
-              token ? <Navigate to={ROUTES.DASHBOARD} replace /> : <Navigate to={ROUTES.LOGIN} replace />
+              accessToken ? <Navigate to={ROUTES.DASHBOARD} replace /> : <Navigate to={ROUTES.LOGIN} replace />
             } 
           />
         </Routes>
