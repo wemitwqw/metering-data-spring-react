@@ -1,7 +1,8 @@
 import api from '../../utils/axios';
 import { consumptionService } from '../consumptions.service';
-import { useConsumptionStore, type Consumption } from '../../stores/useConsumptionStore';
-import { ERROR_MESSAGES } from '../../utils/constants';
+import { useConsumptionStore } from '../../stores/useConsumptionStore';
+import { API_ENDPOINTS, ERROR_MESSAGES } from '../../utils/constants';
+import { Consumption } from '../../types/consumption.type';
 
 jest.mock('../../utils/axios', () => ({
   get: jest.fn(),
@@ -68,7 +69,7 @@ describe('ConsumptionService', () => {
       
       expect(mockSetLoading).toHaveBeenCalledWith(true);
       expect(mockClearError).toHaveBeenCalled();
-      expect(api.get).toHaveBeenCalledWith('/consumptions', {
+      expect(api.get).toHaveBeenCalledWith(API_ENDPOINTS.CONSUMPTIONS, {
         params: {
           meterId,
           year
@@ -127,6 +128,58 @@ describe('ConsumptionService', () => {
       });
       expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.FETCH_CONSUMPTIONS_FAILED);
       expect(mockSetLoading).toHaveBeenCalledWith(false);
+    });
+
+    it('should handle network error without response object', async () => {
+      const meterId = 'meter-123';
+      const year = 2024;
+      
+      const networkError = new Error('Network Error');
+      
+      (api.get as jest.Mock).mockRejectedValueOnce(networkError);
+      
+      await expect(consumptionService.fetchConsumptions(meterId, year)).rejects.toEqual(networkError);
+      
+      expect(mockSetLoading).toHaveBeenCalledWith(true);
+      expect(mockClearError).toHaveBeenCalled();
+      expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.FETCH_CONSUMPTIONS_FAILED);
+      expect(mockSetLoading).toHaveBeenCalledWith(false);
+    });
+
+    it('should handle empty consumption data', async () => {
+      const meterId = 'meter-123';
+      const year = 2024;
+      
+      const mockResponse = {
+        data: []
+      };
+      
+      (api.get as jest.Mock).mockResolvedValueOnce(mockResponse);
+      
+      const result = await consumptionService.fetchConsumptions(meterId, year);
+      
+      expect(mockSetConsumptions).toHaveBeenCalledWith([]);
+      expect(result).toEqual([]);
+    });
+
+    it('should handle different year parameters', async () => {
+      const meterId = 'meter-456';
+      const year = 2023;
+      
+      const mockResponse = {
+        data: mockConsumptions
+      };
+      
+      (api.get as jest.Mock).mockResolvedValueOnce(mockResponse);
+      
+      await consumptionService.fetchConsumptions(meterId, year);
+      
+      expect(api.get).toHaveBeenCalledWith('/consumptions', {
+        params: {
+          meterId: 'meter-456',
+          year: 2023
+        }
+      });
     });
   });
 });

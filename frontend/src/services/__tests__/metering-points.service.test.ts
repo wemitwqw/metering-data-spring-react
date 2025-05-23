@@ -1,7 +1,8 @@
 import api from '../../utils/axios';
 import { meteringPointsService } from '../metering-points.service';
-import { useMeteringPointsStore, type MeteringPoint } from '../../stores/useMeteringPointsStore';
+import { useMeteringPointsStore } from '../../stores/useMeteringPointsStore';
 import { ERROR_MESSAGES } from '../../utils/constants';
+import { MeteringPoint } from '../../types/metering-point.type';
 
 jest.mock('../../utils/axios', () => ({
   get: jest.fn(),
@@ -89,8 +90,48 @@ describe('MeteringPointsService', () => {
       expect(mockSetLoading).toHaveBeenCalledWith(true);
       expect(mockClearError).toHaveBeenCalled();
       expect(api.get).toHaveBeenCalledWith('/metering-points');
-      expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.FETCH_ADDRESSES_FAILED);
+      expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.FETCH_METERING_POINTS_FAILED);
       expect(mockSetLoading).toHaveBeenCalledWith(false);
+    });
+
+    it('should handle network error without response object', async () => {
+      const networkError = new Error('Network Error');
+      
+      (api.get as jest.Mock).mockRejectedValueOnce(networkError);
+
+      await expect(meteringPointsService.fetchMeteringPoints()).rejects.toEqual(networkError);
+      
+      expect(mockSetLoading).toHaveBeenCalledWith(true);
+      expect(mockClearError).toHaveBeenCalled();
+      expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.FETCH_METERING_POINTS_FAILED);
+      expect(mockSetLoading).toHaveBeenCalledWith(false);
+    });
+
+    it('should handle empty metering points data', async () => {
+      const mockResponse = {
+        data: []
+      };
+      
+      (api.get as jest.Mock).mockResolvedValueOnce(mockResponse);
+      
+      const result = await meteringPointsService.fetchMeteringPoints();
+      
+      expect(mockSetMeteringPoints).toHaveBeenCalledWith([]);
+      expect(result).toEqual([]);
+    });
+
+    it('should handle single metering point', async () => {
+      const singleMeteringPoint = [mockMeteringPoints[0]];
+      const mockResponse = {
+        data: singleMeteringPoint
+      };
+      
+      (api.get as jest.Mock).mockResolvedValueOnce(mockResponse);
+      
+      const result = await meteringPointsService.fetchMeteringPoints();
+      
+      expect(mockSetMeteringPoints).toHaveBeenCalledWith(singleMeteringPoint);
+      expect(result).toEqual(singleMeteringPoint);
     });
   });
 });
