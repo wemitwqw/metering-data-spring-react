@@ -4,7 +4,8 @@ import { ERROR_MESSAGES } from '../utils/constants';
 import { useMeteringPointsStore } from '../stores/useMeteringPointsStore';
 
 interface LoginResponse {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -29,7 +30,7 @@ class AuthService {
         password
       });
       
-      const { token, email: userEmail, firstName, lastName } = response.data;
+      const { accessToken, refreshToken, email: userEmail, firstName, lastName } = response.data;
       
       const user: User = {
         email: userEmail,
@@ -37,7 +38,7 @@ class AuthService {
         lastName
       };
       
-      setAuthData(token, user);
+      setAuthData(accessToken, refreshToken, user);
       
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || ERROR_MESSAGES.LOGIN_FAILED;
@@ -55,8 +56,12 @@ class AuthService {
     clearAuth();
   }
   
-  getToken(): string | null {
-    return useAuthStore.getState().token;
+  getAccessToken(): string | null {
+    return useAuthStore.getState().accessToken;
+  }
+
+  getRefreshToken(): string | null {
+    return useAuthStore.getState().refreshToken;
   }
   
   isAuthenticated(): boolean {

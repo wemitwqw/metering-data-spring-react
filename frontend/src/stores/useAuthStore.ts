@@ -9,13 +9,14 @@ interface User {
 }
 
 interface AuthState {
-  token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 
-  setAuthData: (token: string, user: User) => void;
+  setAuthData: (accessToken: string, refreshToken: string, user: User) => void;
   clearAuth: () => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -25,15 +26,17 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      token: null,
+      accessToken: null,
+      refreshToken: null,
       user: null,
       isAuthenticated: false,
       isLoading: false,
       error: null,
 
-      setAuthData: (token: string, user: User) => {
+      setAuthData: (accessToken: string, refreshToken: string, user: User) => {
         set({
-          token,
+          accessToken,
+          refreshToken,
           user,
           isAuthenticated: true,
           error: null
@@ -42,7 +45,8 @@ export const useAuthStore = create<AuthState>()(
       
       clearAuth: () => {
         set({
-          token: null,
+          accessToken: null,
+          refreshToken: null,
           user: null,
           isAuthenticated: false,
           error: null
@@ -64,7 +68,8 @@ export const useAuthStore = create<AuthState>()(
     {
       name: STORAGE_KEYS.AUTH_STORE,
       partialize: (state) => ({ 
-        token: state.token, 
+        accessToken: state.accessToken, 
+        refreshToken: state.refreshToken,
         user: state.user, 
         isAuthenticated: state.isAuthenticated 
       })
