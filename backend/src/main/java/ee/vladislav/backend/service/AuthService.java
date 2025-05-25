@@ -84,15 +84,6 @@ public class AuthService {
 				.build();
 	}
 
-	public void logout() {
-		getCurrentUser().ifPresentOrElse(
-				refreshTokenService::deleteByCustomer,
-				() -> {
-					throw new InvalidRefreshTokenException("Invalid refresh token.");
-				}
-		);
-	}
-
 	public Optional<Customer> getCurrentUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
