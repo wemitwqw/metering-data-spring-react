@@ -5,6 +5,10 @@ import ee.vladislav.backend.dto.AuthResponse;
 import ee.vladislav.backend.dto.RefreshTokenRequest;
 import ee.vladislav.backend.service.AuthService;
 import jakarta.validation.Valid;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +33,12 @@ public class AuthController {
 	}
 
 	@PostMapping("/logout")
-	public ResponseEntity<Void> logout() {
+	public ResponseEntity<Map<String, String>> logout() {
 		authService.logout();
-		return ResponseEntity.ok().build();
+
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Logout successful");
+
+		return ResponseEntity.ok().body(response);
 	}
 }

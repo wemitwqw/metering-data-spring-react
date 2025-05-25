@@ -1,6 +1,7 @@
 package ee.vladislav.backend.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
@@ -54,15 +55,19 @@ public class JwtService {
 	}
 
 	public boolean isTokenValid(String token, UserDetails userDetails) {
-		final String username = extractUsername(token);
-		return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+		try {
+			final String username = extractUsername(token);
+			return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+		} catch (ExpiredJwtException e) {
+			return false;
+		}
 	}
 
 	private boolean isTokenExpired(String token) {
 		return extractClaim(token, Claims::getExpiration).before(new Date());
 	}
 
-	private Claims extractAllClaims(String token) {
+	public Claims extractAllClaims(String token) {
 		Jwt<JwsHeader, Claims> jwt = Jwts
 				.parser()
 				.verifyWith(getSignInKey())

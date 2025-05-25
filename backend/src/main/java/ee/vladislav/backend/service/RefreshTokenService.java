@@ -2,6 +2,7 @@ package ee.vladislav.backend.service;
 
 import ee.vladislav.backend.dao.Customer;
 import ee.vladislav.backend.dao.RefreshToken;
+import ee.vladislav.backend.exception.InvalidRefreshTokenException;
 import ee.vladislav.backend.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +43,7 @@ public class RefreshTokenService {
 	public RefreshToken verifyExpiration(RefreshToken token) {
 		if (token.isExpired()) {
 			refreshTokenRepository.delete(token);
-			throw new RuntimeException("Refresh token expired. Please sign in again.");
+			throw new InvalidRefreshTokenException("Refresh token expired. Please sign in again.");
 		}
 		return token;
 	}

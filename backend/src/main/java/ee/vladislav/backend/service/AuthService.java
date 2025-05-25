@@ -6,6 +6,7 @@ import ee.vladislav.backend.exception.InvalidLoginCredentialsException;
 import ee.vladislav.backend.dto.AuthRequest;
 import ee.vladislav.backend.dto.AuthResponse;
 import ee.vladislav.backend.dao.Customer;
+import ee.vladislav.backend.exception.InvalidRefreshTokenException;
 
 import java.util.Optional;
 
@@ -66,7 +67,7 @@ public class AuthService {
 
 	public AuthResponse refreshToken(RefreshTokenRequest request) {
 		RefreshToken refreshToken = refreshTokenService.findByToken(request.refreshToken())
-				.orElseThrow(() -> new RuntimeException("Invalid refresh token"));
+				.orElseThrow(() -> new InvalidRefreshTokenException("Invalid refresh token."));
 
 		refreshToken = refreshTokenService.verifyExpiration(refreshToken);
 
@@ -84,7 +85,12 @@ public class AuthService {
 	}
 
 	public void logout() {
-		getCurrentUser().ifPresent(refreshTokenService::deleteByCustomer);
+		getCurrentUser().ifPresentOrElse(
+				refreshTokenService::deleteByCustomer,
+				() -> {
+					throw new InvalidRefreshTokenException("Invalid refresh token.");
+				}
+		);
 	}
 
 	public Optional<Customer> getCurrentUser() {

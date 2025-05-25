@@ -30,6 +30,18 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 	}
 
+	@ExceptionHandler(InvalidRefreshTokenException.class)
+	public ResponseEntity<ErrorResponse> handleInvalidRefreshTokenException(InvalidRefreshTokenException ex) {
+		ErrorResponse errorResponse = new ErrorResponse(
+				HttpStatus.UNAUTHORIZED.value(),
+				LocalDateTime.now(),
+				ex.getMessage(),
+				null
+		);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+	}
+
 	@ExceptionHandler(BadApiRequestException.class)
 	public ResponseEntity<ErrorResponse> handleBadApiRequestException(
 			BadApiRequestException ex) {
