@@ -67,7 +67,7 @@ public class AuthControllerIntegrationTest {
 		String refreshToken = loginResponse.getRefreshToken();
 
 		refreshTokenRepository.findByToken(refreshToken).ifPresent(token -> {
-			token.setExpiresAt(LocalDateTime.now().minusHours(1)); // Set to 1 hour ago
+			token.setExpiresAt(LocalDateTime.now().minusHours(1));
 			refreshTokenRepository.save(token);
 		});
 
