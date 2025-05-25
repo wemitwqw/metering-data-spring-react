@@ -6,6 +6,7 @@ import { API_ENDPOINTS, ERROR_MESSAGES } from '../../utils/constants';
 
 jest.mock('../../utils/axios', () => ({
   post: jest.fn(),
+  delete: jest.fn(),
 }));
 
 jest.mock('../../stores/useAuthStore', () => ({
@@ -141,7 +142,7 @@ describe('AuthService', () => {
       
       expect(mockSetLoading).toHaveBeenCalledWith(true);
       expect(mockClearError).toHaveBeenCalled();
-      expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.LOGIN_FAILED);
+      expect(mockSetError).toHaveBeenCalledWith(ERROR_MESSAGES.GENERIC_ERROR);
       expect(mockSetLoading).toHaveBeenCalledWith(false);
     });
   });
@@ -229,11 +230,29 @@ describe('AuthService', () => {
   });
 
   describe('logout', () => {
-    it('should clear auth data and reset metering points', () => {
-      authService.logout();
+    it('should clear auth data and reset metering points', async () => {
+      (api.delete as jest.Mock).mockResolvedValueOnce({ data: { message: 'Logged out successfully' } });
 
+      await authService.logout();
+
+      expect(api.delete).toHaveBeenCalledWith(API_ENDPOINTS.LOGOUT);
+      expect(mockSetLoading).toHaveBeenCalledWith(true);
       expect(mockReset).toHaveBeenCalled();
       expect(mockClearAuth).toHaveBeenCalled();
+      expect(mockSetLoading).toHaveBeenCalledWith(false);
+    });
+
+    it('should clear auth data even if logout API call fails', async () => {
+      const mockError = new Error('Network error');
+      (api.delete as jest.Mock).mockRejectedValueOnce(mockError);
+
+      await expect(authService.logout()).rejects.toEqual(mockError);
+
+      expect(api.delete).toHaveBeenCalledWith(API_ENDPOINTS.LOGOUT);
+      expect(mockSetLoading).toHaveBeenCalledWith(true);
+      expect(mockReset).toHaveBeenCalled();
+      expect(mockClearAuth).toHaveBeenCalled();
+      expect(mockSetLoading).toHaveBeenCalledWith(false);
     });
   });
 });
