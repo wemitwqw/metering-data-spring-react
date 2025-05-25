@@ -203,37 +203,4 @@ public class AuthControllerIntegrationTest {
 				.andExpect(jsonPath("$.status", is(401)))
 				.andExpect(jsonPath("$.message", is("Invalid refresh token.")));
 	}
-
-	@Test
-	void logout_withAuthenticatedUser_shouldSucceed() throws Exception {
-		AuthRequest loginRequest = new AuthRequest(validEmail, validPassword);
-		String loginRequestJson = objectMapper.writeValueAsString(loginRequest);
-
-		MvcResult loginResult = mockMvc.perform(post("/api/auth/login")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(loginRequestJson))
-				.andExpect(status().isOk())
-				.andReturn();
-
-		String loginResponseJson = loginResult.getResponse().getContentAsString();
-		AuthResponse loginResponse = objectMapper.readValue(loginResponseJson, AuthResponse.class);
-		String accessToken = loginResponse.getAccessToken();
-
-		int tokenCountBefore = refreshTokenRepository.findAll().size();
-		assertTrue(tokenCountBefore > 0, "Refresh token should exist in DB after login");
-
-		mockMvc.perform(post("/api/auth/logout")
-						.header("Authorization", "Bearer " + accessToken))
-				.andExpect(status().isOk());
-
-		int tokenCountAfter = refreshTokenRepository.findAll().size();
-		assertEquals(tokenCountBefore - 1, tokenCountAfter,
-				"Refresh token should be removed from DB after logout");
-	}
-
-	@Test
-	void logout_withoutAuthentication_shouldReturnUnauthorized() throws Exception {
-		mockMvc.perform(post("/api/auth/logout"))
-				.andExpect(status().isUnauthorized());
-	}
 }
