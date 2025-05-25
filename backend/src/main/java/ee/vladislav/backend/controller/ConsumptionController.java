@@ -37,4 +37,9 @@ public class ConsumptionController {
 	) {
 		return ResponseEntity.ok(consumptionService.getConsumptionWithCostByMeteringPoint(meterId, year));
 	}
+
+	@GetMapping("years")
+	public ResponseEntity<List<Integer>> fetchConsumptionYears(@Valid @RequestParam String meterId) {
+		return ResponseEntity.ok(consumptionService.getConsumptionYearsByMeterId(meterId));
+	}
 }

@@ -54,6 +54,11 @@ public class ConsumptionService {
 		return result;
 	}
 
+	public List<Integer> getConsumptionYearsByMeterId(String meterId) {
+		meteringPointService.validateUserAccess(meterId);
+		return consumptionRepository.findConsumptionYearsByMeterId(meterId);
+	}
+
 	private List<Consumption> fetchConsumptionData(String meteringPointId, Long year) {
 		meteringPointService.validateUserAccess(meteringPointId);
 
