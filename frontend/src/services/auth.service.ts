@@ -112,20 +112,11 @@ class AuthService {
   }
   
   async logout(): Promise<void> {
-    const { clearAuth, setLoading } = useAuthStore.getState();
+    const { clearAuth } = useAuthStore.getState();
     const { reset } = useMeteringPointsStore.getState();
-
-    setLoading(true);
     
-    try {
-      await api.delete<{ message: string }>(API_ENDPOINTS.LOGOUT);
-    } catch (error: any) {
-      throw error;
-    } finally {
-      setLoading(false);
-      reset();
-      clearAuth();
-    }
+    reset();
+    clearAuth();
   }
 }
 
