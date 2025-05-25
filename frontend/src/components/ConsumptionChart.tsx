@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { 
   Card, 
   CardContent, 
@@ -11,7 +10,6 @@ import {
 } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useConsumptionStore } from '../stores/useConsumptionStore';
-import { consumptionService } from '../services/consumptions.service';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
 
@@ -27,28 +25,8 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
     error, 
     selectedYear,
     availableYears,
-    isLoadingYears,
-    setAvailableYears
+    isLoadingYears
   } = useConsumptionStore();
-  
-  useEffect(() => {
-    const fetchYears = async () => {
-      if (!selectedMeterId) {
-        const currentYear = new Date().getFullYear();
-        const defaultYears = Array.from({ length: 5 }, (_, i) => currentYear - i);
-        setAvailableYears(defaultYears);
-        return;
-      }
-
-      try {
-        await consumptionService.fetchAvailableYears(selectedMeterId);
-      } catch (error) {
-        throw new Error('Failed to fetch available years');
-      }
-    };
-
-    fetchYears();
-  }, [selectedMeterId, setAvailableYears]);
   
   const handleYearChange = (event: any) => {
     const year = event.target.value;
