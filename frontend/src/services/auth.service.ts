@@ -120,7 +120,6 @@ class AuthService {
     try {
       await api.delete<{ message: string }>(API_ENDPOINTS.LOGOUT);
     } catch (error: any) {
-      console.log(error);
       throw error;
     } finally {
       setLoading(false);
