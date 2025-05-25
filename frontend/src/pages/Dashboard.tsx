@@ -24,10 +24,11 @@ import ConsumptionChart from '../components/ConsumptionChart';
 const Dashboard = () => {
   const navigate = useNavigate();
   const { meteringPoints, isLoading, error } = useMeteringPointsStore();
-  const { selectedYear } = useConsumptionStore();
+  const { setSelectedYear } = useConsumptionStore();
   const { user, isAuthenticated } = useAuthStore();
   const [selectedMeteringPoint, setSelectedMeteringPoint] = useState('');
-  
+  const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false);
+
   useEffect(() => {
     if (isAuthenticated) {
       meteringPointsService.fetchMeteringPoints().catch((err) => {
@@ -37,32 +38,57 @@ const Dashboard = () => {
   }, [isAuthenticated]);
   
   useEffect(() => {
-    if (meteringPoints.length > 0 && !selectedMeteringPoint) {
-      setSelectedMeteringPoint(meteringPoints[0].meterId);
-    }
-  }, [meteringPoints, selectedMeteringPoint]);
-  
-  useEffect(() => {
-    if (selectedMeteringPoint && selectedYear) {
-      consumptionService.fetchConsumptions(selectedMeteringPoint, selectedYear).catch((err) => {
-        console.error('Error fetching consumption data:', err);
-      });
-    }
+    const initializeData = async () => {
+      if (meteringPoints.length > 0 && !isInitialDataLoaded) {
+        const firstMeteringPoint = meteringPoints[0].meterId;
+        setSelectedMeteringPoint(firstMeteringPoint);
+        
+        try {
+          const years = await consumptionService.fetchAvailableYears(firstMeteringPoint);
+
+          const latestYear = years[years.length - 1];
+          setSelectedYear(latestYear);
+          
+          await consumptionService.fetchConsumptions(firstMeteringPoint, latestYear);
+          
+          setIsInitialDataLoaded(true);
+        } catch (err) {
+          console.error('Error initializing data:', err);
+        }
+      }
+    };
     
-  }, [selectedMeteringPoint, selectedYear]);
+    initializeData();
+  }, [meteringPoints, isInitialDataLoaded, setSelectedYear]);
+  
+  const handleMeteringPointChange = async (event: any) => {
+    const newMeterId = event.target.value;
+    setSelectedMeteringPoint(newMeterId);
+    
+    try {
+      const years = await consumptionService.fetchAvailableYears(newMeterId);
+
+      const latestYear = years[years.length - 1];
+      setSelectedYear(latestYear);
+      
+      await consumptionService.fetchConsumptions(newMeterId, latestYear);
+    } catch (err) {
+      console.error('Error changing metering point:', err);
+    }
+  };
   
   const handleLogout = () => {
     authService.logout();
     navigate('/login');
   };
   
-  const handleMeteringPointChange = (event: any) => {
-    setSelectedMeteringPoint(event.target.value);
-  };
-  
   const handleYearChange = (year: number) => {
-    const { setSelectedYear } = useConsumptionStore.getState();
     setSelectedYear(year);
+    if (selectedMeteringPoint) {
+      consumptionService.fetchConsumptions(selectedMeteringPoint, year).catch((err) => {
+        console.error('Error fetching consumption data:', err);
+      });
+    }
   };
   
   const selectedMeterData = meteringPoints.find(point => point.meterId === selectedMeteringPoint);
@@ -206,7 +232,7 @@ const Dashboard = () => {
       >
         <Box sx={{ maxWidth: 'lg', mx: 'auto' }}>
           <Typography variant="body2" color="text.secondary" align="center">
-            Metering Data Asessment - 2025
+            Metering Data Assessment - 2025
           </Typography>
         </Box>
       </Box>
