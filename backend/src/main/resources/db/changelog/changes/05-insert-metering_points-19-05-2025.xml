@@ -41,14 +41,5 @@
 			<column name="created_at" valueDate="2023-01-13T00:00:00"/>
 			<column name="updated_at" valueDate="2023-01-13T00:00:00"/>
 		</insert>
-
-		<insert tableName="metering_points">
-			<column name="id" valueSequenceNext="metering_points_seq"/>
-			<column name="customer_id" valueNumeric="2"/>
-			<column name="meter_id" value="MP20002"/>
-			<column name="address" value="Paldiski mnt 121-32"/>
-			<column name="created_at" valueDate="2023-01-14T00:00:00"/>
-			<column name="updated_at" valueDate="2023-01-14T00:00:00"/>
-		</insert>
 	</changeSet>
 </databaseChangeLog>

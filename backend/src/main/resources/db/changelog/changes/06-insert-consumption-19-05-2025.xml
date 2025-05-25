@@ -354,90 +354,85 @@
 			<column name="created_at" valueDate="2025-05-16T10:30:00"/>
 		</insert>
 
-		<!-- Metering Point 5 (Customer 3, Apartment 2) -->
-		<!-- January 2025 -->
+		<!-- 2022 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="225.80"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-01-15T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-01-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-01-16T11:00:00"/>
 		</insert>
 
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="230.45"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-01-31T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-01-31T00:00:00"/>
 			<column name="created_at" valueDate="2025-02-01T11:00:00"/>
 		</insert>
 
-		<!-- February 2025 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="238.60"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-02-15T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-02-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-02-16T11:00:00"/>
 		</insert>
 
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="245.20"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-02-28T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-02-28T00:00:00"/>
 			<column name="created_at" valueDate="2025-03-01T11:00:00"/>
 		</insert>
 
-		<!-- March 2025 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="228.40"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-03-15T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-03-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-03-16T11:00:00"/>
 		</insert>
 
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="208.70"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-03-31T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-03-31T00:00:00"/>
 			<column name="created_at" valueDate="2025-04-01T11:00:00"/>
 		</insert>
 
-		<!-- April 2025 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="195.30"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-04-15T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-04-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-04-16T11:00:00"/>
 		</insert>
 
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="187.60"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-04-30T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-04-30T00:00:00"/>
 			<column name="created_at" valueDate="2025-05-01T11:00:00"/>
 		</insert>
 
-		<!-- May 2025 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
-			<column name="metering_point_id" valueNumeric="5"/>
+			<column name="metering_point_id" valueNumeric="4"/>
 			<column name="amount" valueNumeric="176.40"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-05-15T00:00:00"/>
+			<column name="consumption_time" valueDate="2022-05-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-05-16T11:00:00"/>
 		</insert>
 	</changeSet>
