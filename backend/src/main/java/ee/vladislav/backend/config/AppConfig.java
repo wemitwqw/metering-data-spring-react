@@ -1,7 +1,10 @@
 package ee.vladislav.backend.config;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 
 import java.util.Collections;
 
@@ -52,9 +55,19 @@ public class AppConfig {
 	@Bean
 	public OpenAPI meteringDataOpenApi() {
 		return new OpenAPI()
+				.addSecurityItem(new SecurityRequirement().
+						addList("Bearer Authentication"))
+				.components(new Components().addSecuritySchemes
+						("Bearer Authentication", createAPIKeyScheme()))
 				.info(new Info()
 						.title("Metering Data Assessment API Documentation")
 						.description("REST API for the Ticketing Backend application")
 						.version("v1.0.0"));
+	}
+
+	private SecurityScheme createAPIKeyScheme() {
+		return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+				.bearerFormat("JWT")
+				.scheme("bearer");
 	}
 }
