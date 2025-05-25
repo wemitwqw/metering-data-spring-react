@@ -72,7 +72,7 @@ API Documentation: Auto-generated Swagger/OpenAPI docs
 
 ```./gradlew test```
 
-### Frontend tests (install node_modules with ```npm istall```)
+### Frontend tests (install node_modules with ```npm install```)
 ```cd frontend```
 
 ```npm test```
