@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   LOGOUT: '/auth/logout',
   METERING_POINTS: '/metering-points',
   CONSUMPTIONS: '/consumptions',
+  YEARS: '/consumptions/years',
 };
 
 export const STORAGE_KEYS = {

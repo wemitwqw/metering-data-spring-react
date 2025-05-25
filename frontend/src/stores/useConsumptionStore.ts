@@ -6,6 +6,8 @@ export const useConsumptionStore = create<ConsumptionState>((set) => ({
   isLoading: false,
   error: null,
   selectedYear: new Date().getFullYear(),
+  availableYears: [],
+  isLoadingYears: false,
   
   setConsumptions: (consumptions: Consumption[]) => {
     set({ consumptions, error: null });
@@ -34,5 +36,9 @@ export const useConsumptionStore = create<ConsumptionState>((set) => ({
       error: null,
       selectedYear: new Date().getFullYear()
     });
-  }
+  },
+
+  setAvailableYears: (years) => set({ availableYears: years }),
+  
+  setLoadingYears: (loading) => set({ isLoadingYears: loading }),
 }));

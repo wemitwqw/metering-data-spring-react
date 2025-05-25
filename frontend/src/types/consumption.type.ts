@@ -14,6 +14,8 @@ export interface ConsumptionState {
   isLoading: boolean;
   error: string | null;
   selectedYear: number;
+  availableYears: number[];
+  isLoadingYears: boolean;
   
   setConsumptions: (consumptions: Consumption[]) => void;
   setLoading: (loading: boolean) => void;
@@ -21,4 +23,6 @@ export interface ConsumptionState {
   setSelectedYear: (year: number) => void;
   clearError: () => void;
   reset: () => void;
+  setAvailableYears: (years: number[]) => void;
+  setLoadingYears: (loading: boolean) => void;
 };

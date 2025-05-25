@@ -29,6 +29,30 @@ class ConsumptionService {
       setLoading(false);
     }
   }
+
+  async fetchAvailableYears(meterId: string): Promise<number[]> {
+    const { setLoadingYears, setAvailableYears } = useConsumptionStore.getState();
+    
+    setLoadingYears(true);
+    
+    try {
+      const response = await api.get<number[]>(API_ENDPOINTS.YEARS, {
+        params: {
+          meterId
+        }
+      });
+
+      setAvailableYears(response.data);
+      return response.data;
+    } catch (error: any) {
+      const currentYear = new Date().getFullYear();
+      const defaultYears = Array.from({ length: 5 }, (_, i) => currentYear - i);
+      setAvailableYears(defaultYears);
+      return defaultYears;
+    } finally {
+      setLoadingYears(false);
+    }
+  }
 }
 
 export const consumptionService = new ConsumptionService();

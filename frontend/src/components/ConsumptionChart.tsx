@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { 
   Card, 
   CardContent, 
@@ -10,6 +11,7 @@ import {
 } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useConsumptionStore } from '../stores/useConsumptionStore';
+import { consumptionService } from '../services/consumptions.service';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
 
@@ -19,10 +21,34 @@ interface ConsumptionChartProps {
 }
 
 const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartProps) => {
-  const { consumptions, isLoading, error, selectedYear } = useConsumptionStore();
+  const { 
+    consumptions, 
+    isLoading, 
+    error, 
+    selectedYear,
+    availableYears,
+    isLoadingYears,
+    setAvailableYears
+  } = useConsumptionStore();
   
-  const currentYear = new Date().getFullYear();
-  const availableYears = Array.from({ length: 5 }, (_, i) => currentYear - i);
+  useEffect(() => {
+    const fetchYears = async () => {
+      if (!selectedMeterId) {
+        const currentYear = new Date().getFullYear();
+        const defaultYears = Array.from({ length: 5 }, (_, i) => currentYear - i);
+        setAvailableYears(defaultYears);
+        return;
+      }
+
+      try {
+        await consumptionService.fetchAvailableYears(selectedMeterId);
+      } catch (error) {
+        throw new Error('Failed to fetch available years');
+      }
+    };
+
+    fetchYears();
+  }, [selectedMeterId, setAvailableYears]);
   
   const handleYearChange = (event: any) => {
     const year = event.target.value;
@@ -80,6 +106,7 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
               value={selectedYear}
               label="Year"
               onChange={handleYearChange}
+              disabled={isLoadingYears}
             >
               {availableYears.map((year) => (
                 <MenuItem key={year} value={year}>
@@ -125,7 +152,7 @@ const ConsumptionChart = ({ selectedMeterId, onYearChange }: ConsumptionChartPro
               <Card variant="outlined" sx={{ backgroundColor: 'warning.50' }}>
                 <CardContent sx={{ textAlign: 'center', py: 2 }}>
                   <Typography variant="h6" color="warning.main">
-                    {averageCentsPerKwh.toFixed(2)}¢
+                    {averageCentsPerKwh.toFixed(2)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Avg. cents/kWh
