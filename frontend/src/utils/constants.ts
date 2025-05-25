@@ -1,8 +1,9 @@
-export const API_BASE_URL = 'http://localhost:8080/api';
+export const API_BASE_URL = 'http://localhost:3000/api';
 export const API_ENDPOINTS = {
   AUTH_BASE: '/auth/',
   LOGIN: '/auth/login',
   REFRESH: '/auth/refresh',
+  LOGOUT: '/auth/logout',
   METERING_POINTS: '/metering-points',
   CONSUMPTIONS: '/consumptions',
 };
@@ -24,6 +25,7 @@ export const ERROR_MESSAGES = {
   GENERIC_ERROR: 'Something went wrong. Please try again later.',
   REQUIRED_FIELD: 'This field is required',
   INVALID_EMAIL: 'Please enter a valid email address',
+  LOGOUT_FAILED: 'Logout failed. Please try again later.'
 };
 
 export const APP_NAME = 'Metering Data Assessment';

@@ -42,10 +42,13 @@ class AuthService {
         accessTokenExpiresInSeconds,
         refreshTokenExpiresInSeconds
       );
-      
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || ERROR_MESSAGES.LOGIN_FAILED;
-      setError(errorMessage);
+      if (error.code === 'ECONNREFUSED' || error.code === 'ERR_NETWORK' || !error.response) {
+        setError(ERROR_MESSAGES.GENERIC_ERROR);
+      } else {
+        setError(error.response?.data?.message || ERROR_MESSAGES.LOGIN_FAILED);
+      }
+
       throw error;
     } finally {
       setLoading(false);
@@ -72,7 +75,7 @@ class AuthService {
     }
   }
 
-  private async performRefresh(refreshToken: string): Promise<void> {
+  public async performRefresh(refreshToken: string): Promise<void> {
     try {
       const response = await api.post<RefreshResponse>(API_ENDPOINTS.REFRESH, {
         refreshToken
@@ -101,7 +104,6 @@ class AuthService {
         accessTokenExpiresInSeconds,
         refreshTokenExpiresInSeconds
       );
-
     } catch (error: any) {
       useAuthStore.getState().setError(ERROR_MESSAGES.TOKEN_REFRESH_FAILED);
       useAuthStore.getState().clearAuth();
@@ -109,11 +111,22 @@ class AuthService {
     }
   }
   
-  logout(): void {
-    const { clearAuth } = useAuthStore.getState();
+  async logout(): Promise<void> {
+    const { clearAuth, setLoading } = useAuthStore.getState();
     const { reset } = useMeteringPointsStore.getState();
-    reset();
-    clearAuth();
+
+    setLoading(true);
+    
+    try {
+      await api.delete<{ message: string }>(API_ENDPOINTS.LOGOUT);
+    } catch (error: any) {
+      console.log(error);
+      throw error;
+    } finally {
+      setLoading(false);
+      reset();
+      clearAuth();
+    }
   }
 }
 

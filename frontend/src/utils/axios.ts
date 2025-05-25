@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { useAuthStore } from '../stores/useAuthStore';
 import { API_BASE_URL, ROUTES, API_ENDPOINTS, ERROR_MESSAGES } from './constants';
 import { shouldRefreshToken } from './jwt.validator';
+import { authService } from '../services/auth.service';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -46,84 +47,69 @@ api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
-    
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        }).then(() => {
-          const newToken = useAuthStore.getState().accessToken;
-          if (newToken && originalRequest.headers) {
-            originalRequest.headers.Authorization = `Bearer ${newToken}`;
-          }
-          return api(originalRequest);
-        }).catch(err => {
-          return Promise.reject(err);
-        });
+
+    const handleAuthFailure = (errorMessage?: string) => {
+      processQueue(error, null);
+      isRefreshing = false;
+      
+      if (errorMessage) {
+        useAuthStore.getState().setError(errorMessage);
       }
+      useAuthStore.getState().clearAuth();
+      window.location.href = ROUTES.LOGIN;
+      return Promise.reject(error);
+    };
 
-      originalRequest._retry = true;
-      isRefreshing = true;
-
-      const { refreshToken } = useAuthStore.getState();
-
-      if (!refreshToken || shouldRefreshToken()) {
-        processQueue(error, null);
-        isRefreshing = false;
-        
-        useAuthStore.getState().setError(ERROR_MESSAGES.TOKEN_REFRESH_FAILED);
-        useAuthStore.getState().clearAuth();
-        window.location.href = ROUTES.LOGIN;
-        return Promise.reject(error);
-      }
-
-      try {
-        const refreshResponse = await api.post(API_ENDPOINTS.REFRESH, {
-          refreshToken
-        });
-
-        const { 
-          accessToken, 
-          accessTokenExpiresInSeconds,
-          refreshToken: newRefreshToken, 
-          refreshTokenExpiresInSeconds,
-          email, 
-          firstName, 
-          lastName 
-        } = refreshResponse.data;
-
-        const user = { email, firstName, lastName };
-        
-        useAuthStore.getState().setAuthData(
-          accessToken, 
-          newRefreshToken, 
-          user, 
-          accessTokenExpiresInSeconds,
-          refreshTokenExpiresInSeconds
-        );
-
-        if (originalRequest.headers) {
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        }
-
-        processQueue(null, accessToken);
-        isRefreshing = false;
-
-        return api(originalRequest);
-
-      } catch (refreshError) {
-        processQueue(refreshError, null);
-        isRefreshing = false;
-        
-        useAuthStore.getState().clearAuth();
-        useAuthStore.getState().setError(ERROR_MESSAGES.TOKEN_REFRESH_FAILED);
-        window.location.href = ROUTES.LOGIN;
-        
-        return Promise.reject(refreshError);
-      }
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
     }
 
-    return Promise.reject(error);
+    if (originalRequest.url?.includes(API_ENDPOINTS.REFRESH)) {
+      return handleAuthFailure();
+    }
+
+    if (originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        failedQueue.push({ resolve, reject });
+      })
+      .then(() => {
+        const newToken = useAuthStore.getState().accessToken;
+        if (newToken && originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        }
+        return api(originalRequest);
+      })
+      .catch(err => Promise.reject(err));
+    }
+
+    originalRequest._retry = true;
+    isRefreshing = true;
+
+    const { refreshToken } = useAuthStore.getState();
+
+    if (!refreshToken || shouldRefreshToken()) {
+      return handleAuthFailure(ERROR_MESSAGES.TOKEN_REFRESH_FAILED);
+    }
+
+    try {
+      await authService.performRefresh(refreshToken);
+      
+      const newAccessToken = useAuthStore.getState().accessToken;
+      if (originalRequest.headers && newAccessToken) {
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+      }
+
+      processQueue(null, newAccessToken);
+      isRefreshing = false;
+
+      return api(originalRequest);
+    } catch (refreshError) {
+      return handleAuthFailure();
+    }
   }
 );
 
