@@ -7,14 +7,14 @@
 
 	<changeSet id="06" author="liquibase">
 		<!-- Metering Point 1 (Customer 1, Apartment 1) -->
-		<!-- January 2025 -->
+		<!-- January 2024 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
 			<column name="metering_point_id" valueNumeric="1"/>
 			<column name="amount" valueNumeric="175.50"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-01-15T00:00:00"/>
-			<column name="created_at" valueDate="2025-01-16T09:00:00"/>
+			<column name="consumption_time" valueDate="2024-01-15T00:00:00"/>
+			<column name="created_at" valueDate="2024-01-16T09:00:00"/>
 		</insert>
 
 		<insert tableName="consumption">
@@ -22,8 +22,8 @@
 			<column name="metering_point_id" valueNumeric="1"/>
 			<column name="amount" valueNumeric="182.75"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-01-31T00:00:00"/>
-			<column name="created_at" valueDate="2025-02-01T09:00:00"/>
+			<column name="consumption_time" valueDate="2024-01-31T00:00:00"/>
+			<column name="created_at" valueDate="2024-02-01T09:00:00"/>
 		</insert>
 
 		<!-- February 2025 -->
@@ -45,13 +45,13 @@
 			<column name="created_at" valueDate="2025-03-01T09:00:00"/>
 		</insert>
 
-		<!-- March 2025 -->
+		<!-- March 2024 -->
 		<insert tableName="consumption">
 			<column name="id" valueSequenceNext="consumption_seq"/>
 			<column name="metering_point_id" valueNumeric="1"/>
 			<column name="amount" valueNumeric="175.20"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-03-15T00:00:00"/>
+			<column name="consumption_time" valueDate="2024-03-15T00:00:00"/>
 			<column name="created_at" valueDate="2025-03-16T09:00:00"/>
 		</insert>
 
@@ -60,7 +60,7 @@
 			<column name="metering_point_id" valueNumeric="1"/>
 			<column name="amount" valueNumeric="167.80"/>
 			<column name="amount_unit" value="kW"/>
-			<column name="consumption_time" valueDate="2025-03-31T00:00:00"/>
+			<column name="consumption_time" valueDate="2024-03-31T00:00:00"/>
 			<column name="created_at" valueDate="2025-04-01T09:00:00"/>
 		</insert>
 
