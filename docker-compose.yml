@@ -1,4 +1,5 @@
 name: metering-data-assessment
+
 services:
   postgres:
     image: postgres:16-alpine
@@ -13,22 +14,58 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     platform: linux/arm64
+    networks:
+      - backend-network
+
   redis:
     image: redis:7-alpine
     container_name: redis-cache
     restart: always
-    ports:
-      - "3003:6379"
     volumes:
       - redis_data:/data
     command: redis-server --save 60 1 --loglevel warning
     platform: linux/arm64
+    networks:
+      - backend-network
+
   frontend-react:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
+    networks:
+      - frontend-network
+    depends_on:
+      - backend-spring
+
+  backend-spring:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:8080"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: "postgres"
+      DB_USERNAME: "postgres"
+      DB_PASSWORD: "postgres"
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    networks:
+      - frontend-network
+      - backend-network
+    depends_on:
+      - postgres
+      - redis
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
 
 volumes:
   postgres_data:
