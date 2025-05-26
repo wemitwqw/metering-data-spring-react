@@ -180,7 +180,7 @@ public class AuthControllerIntegrationTest {
 
 		MvcResult secondRefreshResult = mockMvc.perform(post("/api/auth/refresh")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content(secondRefreshRequestJson))  // Use NEW token here
+						.content(secondRefreshRequestJson))
 				.andExpect(status().isOk())
 				.andReturn();
 

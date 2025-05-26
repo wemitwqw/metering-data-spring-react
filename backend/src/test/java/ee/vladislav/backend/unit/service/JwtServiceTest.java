@@ -104,7 +104,7 @@ class JwtServiceTest {
 
 	@Test
 	void isTokenValid_ExpiredToken_ReturnsFalse() {
-		ReflectionTestUtils.setField(jwtService, "JWT_EXPIRATION", -1000); // Negative expiration
+		ReflectionTestUtils.setField(jwtService, "JWT_EXPIRATION", -1000);
 		String expiredToken = jwtService.generateToken(testCustomer);
 
 		ReflectionTestUtils.setField(jwtService, "JWT_EXPIRATION", JWT_EXPIRATION);

@@ -120,7 +120,6 @@ class MeteringPointServiceTest {
 
 	@Test
 	void getMeteringPoints_NoMeteringPoints_ReturnsEmptyList() {
-		// Given
 		when(authService.getCurrentUser()).thenReturn(Optional.of(testCustomer));
 		when(meteringPointRepository.findByCustomerId(testCustomer.getId()))
 				.thenReturn(List.of());
@@ -145,7 +144,6 @@ class MeteringPointServiceTest {
 		when(meteringPointRepository.existsByMeterIdAndCustomerId(meteringPointId, userId))
 				.thenReturn(true);
 
-		// When & Then
 		assertDoesNotThrow(() -> meteringPointService.validateUserAccess(meteringPointId));
 
 		verify(authService).getCurrentUserId();
@@ -154,7 +152,6 @@ class MeteringPointServiceTest {
 
 	@Test
 	void validateUserAccess_UserDoesNotHaveAccess_ThrowsAccessDeniedException() {
-		// Given
 		String meteringPointId = "MP001";
 		Long userId = 1L;
 
@@ -162,7 +159,6 @@ class MeteringPointServiceTest {
 		when(meteringPointRepository.existsByMeterIdAndCustomerId(meteringPointId, userId))
 				.thenReturn(false);
 
-		// When & Then
 		AccessDeniedException exception = assertThrows(AccessDeniedException.class,
 				() -> meteringPointService.validateUserAccess(meteringPointId));
 
@@ -174,13 +170,11 @@ class MeteringPointServiceTest {
 
 	@Test
 	void validateUserAccess_AuthServiceThrowsException_PropagatesException() {
-		// Given
 		String meteringPointId = "MP001";
 
 		when(authService.getCurrentUserId())
 				.thenThrow(new AccessDeniedException("User not authenticated"));
 
-		// When & Then
 		AccessDeniedException exception = assertThrows(AccessDeniedException.class,
 				() -> meteringPointService.validateUserAccess(meteringPointId));
 
